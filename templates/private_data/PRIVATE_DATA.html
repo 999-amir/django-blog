@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block section %}
+<div class="w-[80%] mx-auto mt-5 text-slate-600">
+    <h3 class="px-5 mt-5">private key:</h3>
+    <div class="p-5 grid grid-cols-3 gap-3 mx-5">
+        {% for pd in private_data %}
+        <a class="bg-zinc-900 rounded-lg border border-slate-600 p-3 cursor-pointer uppercase" href="{% url 'private-data:detail' pd.pk %}">
+            <h4 class="text-2xl">{{ pd.title }}</h4>
+            <div class="bg-slate-600 w-full h-[1px] my-2"></div>
+            <p class="text-xs mx-1">
+                UPDATED: {{ pd.updated|date:"m/d/Y" }}<br>
+                CREATED: {{ pd.created|date:"m/d/Y" }}<br>
+            </p>
+        </a>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

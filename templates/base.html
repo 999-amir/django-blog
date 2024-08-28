@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!--    settings & API-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Martian Mono">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://unpkg.com/hyperscript.org@0.9.12"></script>
+    <style>
+        body {
+            font-family: "Martian Mono", sans-serif;
+        }
+    </style>
+    <!--    title-->
+    <title><9></title>
+</head>
+<body class="bg-black text-sm">
+    <main class="flex">
+        <aside class="flex-none w-[18rem] h-dvh">
+            <div class="grid grid-cols-1 gap-2 m-2">
+                <a class="bg-zinc-900 rounded-lg p-2 text-lime-600 border-2 border-lime-600 cursor-pointer transition ease-in-out duration-150 hover:bg-lime-700 hover:text-black" href="{% url 'home:main_page' %}">HOME</a>
+                <a class="bg-zinc-900 rounded-lg p-2 text-lime-600 border-2 border-lime-600 cursor-pointer transition ease-in-out duration-150 hover:bg-lime-700 hover:text-black" href="{% url 'blog:main_page' %}">BLOG</a>
+                <a class="bg-zinc-900 rounded-lg p-2 text-lime-600 border-2 border-lime-600 cursor-pointer transition ease-in-out duration-150 hover:bg-lime-700 hover:text-black" href="{% url 'private-data:main_page' %}">PRIVATE DATA</a>
+                <div class="text-lime-600 bg-zinc-900 rounded-lg p-3 border border-lime-600 mt-3">
+                    <p>fast-access-links</p>
+                    <div class="ml-5 mt-2 grid grid-cols-1 gap-1" style="font-size: 12px">
+                        {% for fal in fast_access_data %}
+                            <a class="transition ease-in-out duration-150 hover:text-lime-700" target="_blank" href="{{ fal.link }}">- {{ fal.name }}</a>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </aside>
+        <section class="grow h-dvh mx-5 overflow-y-scroll">
+            {% block section %}
+            {% endblock %}
+        </section>
+        <aside class="flex-none w-[18rem] h-dvh">
+            <div class="grid grid-cols-1 gap-2 m-2">
+
+                <canvas id="site-visit" class="bg-zinc-900 rounded-lg p-2 border border-lime-600"></canvas>
+                <canvas id="finance-btc" class="bg-zinc-900 rounded-lg p-2 border border-lime-600"></canvas>
+                <canvas id="finance-eth" class="bg-zinc-900 rounded-lg p-2 border border-lime-600"></canvas>
+
+                    <div class="bg-zinc-900 rounded-lg p-2 border border-red-800 text-red-700 text-xs grid grid-cols1 gap-1">
+                        {% if user.is_authenticated %}
+                        <p>NAME: {{ user.name }}</p>
+                        <p>REGISTRATION: {% if user.is_admin %}admin{% elif user.is_verify %}verified{% else %}need verification{% endif %}</p>
+                        <p>LOGIN DATE: {{ user.last_login|date:"m/d/Y" }}</p>
+                        <a class="text-center px-2 py-1 border border-red-700 mt-2 rounded transition ease-in-out duration-150 hover:bg-red-700 hover:text-black" href="{% url 'accounts:change-password' %}">CHANGE-PASSWORD</a>
+                        <a class="text-center px-2 py-1 border border-red-700 mt-1 rounded transition ease-in-out duration-150 hover:bg-red-700 hover:text-black" href="{% url 'accounts:logout' %}">LOGOUT</a>
+                        {% else %}
+                        <a class="text-center px-2 py-1 border border-red-700 my-1 rounded transition ease-in-out duration-150 hover:bg-red-700 hover:text-black" href="{% url 'accounts:signup' %}">SIGNUP</a>
+                        <a class="text-center px-2 py-1 border border-red-700 my-1 rounded transition ease-in-out duration-150 hover:bg-red-700 hover:text-black" href="{% url 'accounts:login' %}">LOGIN</a>
+                        {% endif %}
+                        <a class="text-center px-2 py-1 border border-red-700 my-1 rounded transition ease-in-out duration-150 hover:bg-red-700 hover:text-black" href="{% url 'accounts:forget-password' %}">FORGET-PASSWORD</a>
+                    </div>
+            </div>
+        </aside>
+    </main>
+    {% include 'incs/notification.html' %}
+</body>
+<script>
+  const site_visit = document.getElementById('site-visit');
+  new Chart(site_visit, {
+    type: 'line',
+    data: {
+      labels: {{ track_users_seen.date }},
+      datasets: [{
+        label: 'site visit',
+        data: {{ track_users_seen.count }},
+        borderWidth: 1,
+        borderColor: '#65a30d',
+        backgroundColor: '#65a30d',
+      }]
+    },
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      }
+    }
+  });
+
+  const finance_btc = document.getElementById('finance-btc');
+  new Chart(finance_btc, {
+    type: 'line',
+    data: {
+      labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+      datasets: [{
+        label: 'BTC',
+        data: [12, 19, 3, 5, 2, 3],
+        borderWidth: 1,
+        borderColor: '#65a30d',
+        backgroundColor: '#65a30d',
+      }]
+    },
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      }
+    }
+  });
+
+  const finance_eth = document.getElementById('finance-eth');
+  new Chart(finance_eth, {
+    type: 'line',
+    data: {
+      labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+      datasets: [{
+        label: 'ETH',
+        data: [12, 19, 3, 5, 2, 3],
+        borderWidth: 1,
+        borderColor: '#65a30d',
+        backgroundColor: '#65a30d',
+      }]
+    },
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      }
+    }
+  });
+</script>
+{% block script %}
+{% endblock %}
+</html>

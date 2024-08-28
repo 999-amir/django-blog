@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+
+{% block section %}
+<div class="w-[80%] mx-auto mt-5 text-slate-600">
+    <h3 class="px-5 mt-5">filters:</h3>
+    <div class="p-5 gird grid-cols-20 gap-2 text-black text-xs mx-5">
+        <a href="#" class="bg-slate-700 transition ease-in-out duration-150 hover:bg-slate-600 rounded-2xl px-3 py-2">czczx</a>
+        <a href="#" class="bg-slate-700 transition ease-in-out duration-150 hover:bg-slate-600 rounded-2xl px-3 py-2">czczx</a>
+        <a href="#" class="bg-slate-700 transition ease-in-out duration-150 hover:bg-slate-600 rounded-2xl px-3 py-2">czczx</a>
+    </div>
+    <h3 class="px-5 mt-5">blogs:</h3>
+    <div class="p-5 grid grid-cols-3 gap-3 mx-5">
+        {% for bd in blog_data %}
+            <a class="bg-zinc-900 rounded-lg border border-slate-600 p-3 cursor-pointer" href="{% url 'blog:detail' bd.pk %}">
+                <h4 class="text-2xl">{{ bd.title }}</h4>
+                <p class="text-xs mt-1">created: {{ bd.created|date:"m/d/Y" }}</p>
+                <div class="bg-slate-600 w-full h-[1px] my-2"></div>
+                <p class="text-xs mx-1">{{ bd.snippet }}</p>
+            </a>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,19 @@
+﻿# base-modules
+asgiref
+Django
+sqlparse
+tzdata
+
+# generate fake-data [DEV]
+faker
+
+# image
+pillow
+
+# API
+install djangorestframework,
+markdown
+django-filter
+drf-yasg[validation]
+djangorestframework-simplejwt
+requests

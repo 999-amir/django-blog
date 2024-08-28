@@ -1,0 +1,14 @@
+{% if messages %}
+{% for m in messages %}
+<div id="js-toast" class="z-50 fixed w-full top-7 w-full grid justify-items-center opacity-0 ease-in-out"
+     _="on load transition my opacity to 1 over 0.2s then wait 5s then transition my opacity to 0 over 0.2s then remove me" role="alert">
+    <div class="flex items-center w-full max-w-xs bg-black border {% if m.tags %}border-{{ m.tags }}{% else %}border-red-600{% endif %} px-5 py-4 w-[10rem] rounded-xl"
+         role="alert">
+        <div class="font-normal text-left {% if m.tags %}text-{{ m.tags }}{% else %}text-red-600{% endif %} text-xs">
+            <p>new notification:</p>
+            <p class="text-sm mt-2">{{ m }}</p>
+        </div>
+    </div>
+</div>
+{% endfor %}
+{% endif %}

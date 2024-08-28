@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+
+{% block section %}
+<h3 class="px-5 text-lime-600 mt-5">charts:</h3>
+<div class="p-5 grid grid-cols-2 gap-2 h-[20rem]">
+    <div>
+    <canvas id="full-finance-btc"></canvas>
+    </div>
+    <div>
+    <canvas id="full-finance-eth"></canvas>
+    </div>
+</div>
+<h3 class="px-5 text-violet-600 mt-5">favorite:</h3>
+<div class="p-5 gird grid-cols-20 gap-2 text-violet-700 text-xs">
+    <a href="#" class="border-2 border-violet-950 transition ease-in-out duration-150 hover:bg-violet-950 rounded-2xl px-3 py-2">czczx</a>
+</div>
+<h3 class="px-5 text-cyan-600 mt-5">news:</h3>
+<div class="p-5 gird grid-cols-20 gap-2 text-black text-xs">
+    <a href="#" class="bg-cyan-800 transition ease-in-out duration-150 hover:bg-cyan-700 rounded-2xl px-3 py-2">czczx</a>
+    <a href="#" class="bg-cyan-800 transition ease-in-out duration-150 hover:bg-cyan-700 rounded-2xl px-3 py-2">czczx</a>
+    <a href="#" class="bg-cyan-800 transition ease-in-out duration-150 hover:bg-cyan-700 rounded-2xl px-3 py-2">czczx</a>
+    <a href="#" class="bg-cyan-800 transition ease-in-out duration-150 hover:bg-cyan-700 rounded-2xl px-3 py-2">czczx</a>
+    <a href="#" class="bg-cyan-800 transition ease-in-out duration-150 hover:bg-cyan-700 rounded-2xl px-3 py-2">czczx</a>
+    <a href="#" class="bg-cyan-800 transition ease-in-out duration-150 hover:bg-cyan-700 rounded-2xl px-3 py-2">czczx</a>
+    <a href="#" class="bg-cyan-800 transition ease-in-out duration-150 hover:bg-cyan-700 rounded-2xl px-3 py-2">czczx</a>
+</div>
+{% if user.is_authenticated %}
+<div class="p-5 gird grid-cols-1 gap-2 text-red-700 text-xs border border-red-900 rounded-lg m-5">
+    <p class="text-sm mb-3">! if there is unknown-devices you should <a href="{% url 'accounts:change-password' %}" class="underline underline-offset-4">change-password</a> !</p>
+    <p>Windows provides a variety of configuration tools tailored to meet the needs of different users. These built-in tools facilitate your device's customization and monitoring, allowing you to change Windows' configuration to suit your preferences and requirements with precision.</p>
+</div>
+{% endif %}
+{% endblock %}
+
+{% block script %}
+<script>
+  const full_finance_btc = document.getElementById('full-finance-btc');
+  new Chart(full_finance_btc, {
+    type: 'line',
+    data: {
+      labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+      datasets: [{
+        label: 'site visit',
+        data: [12, 19, 3, 5, 2, 3],
+        borderWidth: 1,
+        borderColor: '#65a30d',
+        backgroundColor: '#65a30d',
+      }]
+    },
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      }
+    }
+  });
+
+  const full_finance_eth = document.getElementById('full-finance-eth');
+  new Chart(full_finance_eth, {
+    type: 'line',
+    data: {
+      labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+      datasets: [{
+        label: 'BTC',
+        data: [12, 19, 3, 5, 2, 3],
+        borderWidth: 1,
+        borderColor: '#65a30d',
+        backgroundColor: '#65a30d',
+      }]
+    },
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      }
+    }
+  });
+</script>
+{% endblock %}
