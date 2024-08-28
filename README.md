@@ -10,13 +10,13 @@ links -> <a href="https://docs.djangoproject.com/en/5.1/topics/auth/default/">Se
 <ul>
     <li>prevent authenticated users to open signup page</li>
     <li>password, confirm-password
-        <p>- both should be available</p>
-        <p>- should be same</p>
-        <p>- length > 8 char</p>
-        <p>- at least 1 alpha char</p>
-        <p>- at least 1 uppercase char</p>
-        <p>- at least 1 number</p>
-        <p>- at least one slower char</p>
+        <p>1- both should be available</p>
+        <p>2- should be same</p>
+        <p>3- length > 8 char</p>
+        <p>4- at least 1 alpha char</p>
+        <p>5- at least 1 uppercase char</p>
+        <p>6- at least 1 number</p>
+        <p>7- at least one slower char</p>
     </li>
     <li>email nad name are unique so it's impossible to set registered email or name</li>
 </ul>
