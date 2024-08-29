@@ -2,6 +2,9 @@ from django.db import models
 from accounts.models import CostumeUser
 
 
+
+
+
 class PrivateDataModel(models.Model):
     user = models.ForeignKey(CostumeUser, on_delete=models.CASCADE)
     title = models.CharField(max_length=20)

@@ -121,3 +121,45 @@
 </ul>
 
 # ☣️APP - PRIVATE_DATA☣️
+<p>this app is just contain username and password field that save data in DB but the point is that both of username and password will be saved after encrypted by 🔐CRYPTOGRAPHY🔐<br>
+🔴 it could be so usefull for SECURITY and DATABASE-ATTACK<br>
+🔵 this app will also check authentication and activation of users
+</p>
+✅ Source -> <a href="https://cryptography.io/en/latest/fernet/">cryptography</a>
+<h5>⚙️ how to use 🔐cryptography🔐:</h5>
+
+<p>
+1- pip install cryptography<br>
+2- generate new key
+
+```python
+from cryptography.fernet import Fernet
+print(Fernet.generate_key())
+```
+3- add it to core/settings.py
+
+```python
+# cryptography-key
+CRYPTOGRAPHY_KEY = b'your-generated-key'
+```
+4- create cryptography.py and create customized encrypt and decrypt 
+```python
+from cryptography.fernet import Fernet
+from django.conf import settings
+
+fernet = Fernet(settings.CRYPTOGRAPHY_KEY)
+
+def encrypt(text):  # str[text] -> byte[text] -> encode -> byte[token] -> str[token]
+    byten_text = text.encode(encoding="utf-8")
+    byten_encrypt = fernet.encrypt(byten_text)
+    str_token = byten_encrypt.decode(encoding="utf-8")
+    return str_token
+
+def decrypt(token):  # str[token] -> byte[token] -> decode -> byte[text] -> str[text]
+    byten_token = token.encode(encoding="utf-8")
+    byten_decrypt = fernet.decrypt(byten_token)
+    str_text = byten_decrypt.decode(encoding="utf-8")
+    return str_text
+```
+5- now use 🔶encrypt-method🔶 everytime you want to create private-data in DB and use 🔶decrypt-method🔶 everytime you want to read private-data in DB
+</p>

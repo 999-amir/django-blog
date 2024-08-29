@@ -6,7 +6,7 @@
          role="alert">
         <div class="font-normal text-left {% if m.tags %}text-{{ m.tags }}{% else %}text-red-600{% endif %} text-xs">
             <p>new notification:</p>
-            <p class="text-sm mt-2">{{ m }}</p>
+            <p class="text-sm mt-2">{{ m|safe }}</p>
         </div>
     </div>
 </div>

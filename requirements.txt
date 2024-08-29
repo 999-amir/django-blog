@@ -11,9 +11,12 @@ faker
 pillow
 
 # API
-install djangorestframework,
+djangorestframework
 markdown
 django-filter
 drf-yasg[validation]
 djangorestframework-simplejwt
 requests
+
+# encrypt
+cryptography
