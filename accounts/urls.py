@@ -11,5 +11,7 @@ urlpatterns = [
     path('change-password/', views.ChangePasswordView.as_view(), name='change-password'),
     path('api/v1/', include('accounts.api.v1.urls', namespace='api-v1')),
     path('forget-password/', views.SendForgetPasswordTokenView.as_view(), name='forget-password'),
-    path('confirm-forget-password/<str:token>', views.ConfirmForgetPasswordView.as_view(), name='confirm-forget-password')
+    path('confirm-forget-password/<str:token>', views.ConfirmForgetPasswordView.as_view(), name='confirm-forget-password'),
+    path('send-activate-token/', views.SendActivateTokenView.as_view(), name='send-activate-token'),
+    path('activate-user/<str:token>', views.ActivateUserView.as_view(), name='activate-user')
 ]

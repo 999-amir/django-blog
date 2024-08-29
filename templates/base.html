@@ -51,6 +51,9 @@
                         <p>LOGIN DATE: {{ user.last_login|date:"m/d/Y" }}</p>
                         <a class="text-center px-2 py-1 border border-red-700 mt-2 rounded transition ease-in-out duration-150 hover:bg-red-700 hover:text-black" href="{% url 'accounts:change-password' %}">CHANGE-PASSWORD</a>
                         <a class="text-center px-2 py-1 border border-red-700 mt-1 rounded transition ease-in-out duration-150 hover:bg-red-700 hover:text-black" href="{% url 'accounts:logout' %}">LOGOUT</a>
+                        {% if not user.is_verify %}
+                        <a class="text-center px-2 py-1 border border-red-700 mt-1 rounded transition ease-in-out duration-150 hover:bg-red-700 hover:text-black" href="{% url 'accounts:send-activate-token' %}">activate user</a>
+                        {% endif %}
                         {% else %}
                         <a class="text-center px-2 py-1 border border-red-700 my-1 rounded transition ease-in-out duration-150 hover:bg-red-700 hover:text-black" href="{% url 'accounts:signup' %}">SIGNUP</a>
                         <a class="text-center px-2 py-1 border border-red-700 my-1 rounded transition ease-in-out duration-150 hover:bg-red-700 hover:text-black" href="{% url 'accounts:login' %}">LOGIN</a>

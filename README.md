@@ -1,12 +1,12 @@
 <h1>BLOG + CHAT + PRIVATE_DATA</h1>
-<h3>DJANGO + REST_API + WEBSOCKET + CELERY + REDIS + DOCKER</h3>
+<h3>⚡ DJANGO + REST_API + WEBSOCKET + CELERY + REDIS + DOCKER ⚡</h3>
 <h5>this is a django project that contain most of the django challenges</h5>
 
-# PRIVACY (accounts)
+# ☢️PRIVACY (accounts)☢️
 
 <h5>contain registration, login, logout, change-password, forget-password using Session, Token, JWT</h5>
-links -> <a href="https://docs.djangoproject.com/en/5.1/topics/auth/default/">Session</a> | <a href="https://www.django-rest-framework.org/api-guide/authentication/">Token</a> | <a href="https://jwt.io/">JWT</a>
-<h5>signup</h5>
+✅links -> <a href="https://docs.djangoproject.com/en/5.1/topics/auth/default/">Session</a> | <a href="https://www.django-rest-framework.org/api-guide/authentication/">Token</a> | <a href="https://jwt.io/">JWT</a>
+<h5>⚙️signup</h5>
 <ul>
     <li>prevent authenticated users to open signup page</li>
     <li>password, confirm-password
@@ -21,7 +21,7 @@ links -> <a href="https://docs.djangoproject.com/en/5.1/topics/auth/default/">Se
     <li>email nad name are unique so it's impossible to set registered email or name</li>
 </ul>
 
-<h5>login</h5>
+<h5>⚙️login</h5>
 <ul>
     <li>Session
         <ul>
@@ -45,7 +45,7 @@ links -> <a href="https://docs.djangoproject.com/en/5.1/topics/auth/default/">Se
     </li>
 </ul>
 
-<h5>logout</h5>
+<h5>⚙️logout</h5>
 <ul>
     <li>Session
         <ul>
@@ -59,7 +59,7 @@ links -> <a href="https://docs.djangoproject.com/en/5.1/topics/auth/default/">Se
     </li>
 </ul>
 
-<h5>activate user ( with JWT )</h5>
+<h5>⚙️activate user ( with JWT )</h5>
 <ul>
     <li>generate and send token
         <ul>
@@ -82,8 +82,9 @@ links -> <a href="https://docs.djangoproject.com/en/5.1/topics/auth/default/">Se
         </ul>
     </li>
 </ul>
+<p>◆ in webpage email will automatically send with user who authenticated ( there is not field )</p>
 
-<h5>forget password ( with JWT and auto-activation for user )</h5>
+<h5>⚙️forget password ( with JWT and auto-activation for user )</h5>
 <p>it similar with change-password but we should get user with token, look line activation user ( with JWT )</p>
 <ul>
     <li>generate and send token
@@ -108,3 +109,15 @@ links -> <a href="https://docs.djangoproject.com/en/5.1/topics/auth/default/">Se
         </ul>
     </li>
 </ul>
+
+<h5>⚙️track users</h5>
+<p>used for count users per each day and also show users logged in devices ( for more privacy )</p>
+<p>track-users added to middleware so this method will check in each request</p>
+<p>each user or system will be saved if there is no similar object in database with below items</p>
+<ul>
+    <li>USER: if there is non-authenticated-user it will set with Blank</li>
+    <li>IP: using "HTTP_X_FORWARDED_FOR" or "REMOTE_ADDR"</li>
+    <li>SYSTEM: using "HTTP_USER_AGENT"</li>
+</ul>
+
+# ☣️APP - PRIVATE_DATA☣️

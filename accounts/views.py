@@ -190,3 +190,58 @@ class ConfirmForgetPasswordView(View):
             messages.success(request, 'password changed successfully', 'cyan-600')
             return redirect('home:main_page')
         return render(request, 'accounts/forget-password/CONFIRM-FORGET-PASSWORD.html', {'forms': forms})
+
+
+class SendActivateTokenView(View):
+    def dispatch(self, request, *args, **kwargs):
+        if not request.user.is_authenticated:
+            messages.error(request, 'please login for send you activation-email with authenticated user', 'amber-600')
+            return redirect('home:main_page')
+        elif request.user.is_verify:
+            messages.error(request, 'your account has been verified before', 'amber-600')
+            return redirect('home:main_page')
+        return super().dispatch(request, *args, **kwargs)
+
+    def get(self, request):
+        token = self.get_token_for_user(request.user)
+        # send_email(token)
+        send_email(request.user.name, token)
+        messages.success(request, 'email send', 'green-600')
+        return redirect('home:main_page')
+
+    def get_token_for_user(self, user):
+        refresh = RefreshToken.for_user(user)
+        return str(refresh.access_token)
+
+
+class ActivateUserView(View):
+    def dispatch(self, request, *args, **kwargs):
+        if not request.user.is_authenticated:
+            messages.error(request, 'please login for send you activation-email with authenticated user', 'amber-600')
+            return redirect('home:main_page')
+        elif request.user.is_verify:
+            messages.error(request, 'your account has been verified before', 'amber-600')
+            return redirect('home:main_page')
+        return super().dispatch(request, *args, **kwargs)
+
+    def get(self, request, token):
+        try:
+            token = jwt.decode(token, settings.SECRET_KEY, algorithms=['HS256'])
+            user_id = token.get('user_id')
+        except jwt.ExpiredSignatureError:
+            messages.error(request, 'token has been expired', 'amber-600')
+            return redirect('home:main_page')
+        except jwt.InvalidSignatureError:
+            messages.error(request, 'token is invalid', 'amber-600')
+            return redirect('home:main_page')
+        except:
+            messages.error(request, 'token is incorrect', 'amber-600')
+            return redirect('home:main_page')
+        user = get_object_or_404(CostumeUser, pk=user_id)
+        if user.id != request.user.id:
+            messages.error(request, 'the user that receive email is not the same with user who authenticated', 'amber-600')
+            return redirect('home:main_page')
+        user.is_verify = True
+        user.save()
+        messages.success(request, 'user activated', 'green-600')
+        return redirect('home:main_page')
