@@ -1,8 +1,10 @@
 from django.db import models
 import os
+from accounts.models import CostumeUser
 
 
 class BlogModel(models.Model):
+    user = models.ForeignKey(CostumeUser, on_delete=models.SET_NULL, null=True, blank=True)
     title = models.CharField(max_length=20, unique=True)
     snippet = models.CharField(max_length=250)
 

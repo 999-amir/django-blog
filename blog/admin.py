@@ -10,16 +10,14 @@ class BlogContentInline(admin.TabularInline):
 
 @admin.register(BlogModel)
 class BlogAdmin(admin.ModelAdmin):
-    list_display = ('title', 'updated', 'created')
+    list_display = ('user', 'title', 'updated', 'created')
     fieldsets = (
         (
             'information',
-            {'fields': ('title', 'snippet', 'updated', 'created')}
+            {'fields': ('user', 'title', 'snippet', 'updated', 'created')}
         ),
     )
     search_fields = ('title',)
     ordering = ('title', 'updated', 'created')
     readonly_fields = ('updated', 'created')
     inlines = (BlogContentInline,)
-
-

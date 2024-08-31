@@ -11,10 +11,14 @@
     </div>
     <h3 class="px-5 mt-5">blogs:</h3>
     <div class="p-5 grid grid-cols-3 gap-3 mx-5">
+            <a class="bg-zinc-900 rounded-lg border border-slate-600 p-3 cursor-pointer flex justify-center items-center" href="{% url 'blog:create-title' %}">
+                <lord-icon src="https://cdn.lordicon.com/wuvorxbv.json" trigger="loop" stroke="bold" colors="primary:#b91c1c,secondary:#3730a3" style="width:50px;height:50px"></lord-icon>
+            </a>
         {% for bd in blog_data %}
-            <a class="bg-zinc-900 rounded-lg border border-slate-600 p-3 cursor-pointer" href="{% url 'blog:detail' bd.pk %}">
+            <a class="bg-zinc-900 rounded-lg border border-slate-600 p-3 cursor-pointer" href="{% url 'blog:detail' bd.title %}">
                 <h4 class="text-2xl">{{ bd.title }}</h4>
                 <p class="text-xs mt-1">created: {{ bd.created|date:"m/d/Y" }}</p>
+                {% if bd.user %}<p class="text-xs mt-1">author: {{ bd.user }}</p>{% endif %}
                 <div class="bg-slate-600 w-full h-[1px] my-2"></div>
                 <p class="text-xs mx-1">{{ bd.snippet }}</p>
             </a>

@@ -163,3 +163,9 @@ def decrypt(token):  # str[token] -> byte[token] -> decode -> byte[text] -> str[
 ```
 5- now use 🔶encrypt-method🔶 everytime you want to create private-data in DB and use 🔶decrypt-method🔶 everytime you want to read private-data in DB
 </p>
+
+# APP - BLOG
+create blog with text, file, image<br>
+🔴 permissions: everyone can read blog-details but authenticated and activated users can create their own blog, also only author can add content to it's blog
+<h5>📤how to upload-file in django📤</h5>
+💥 checkout my repository 💥 ➡ <a href="https://github.com/999-amir/upload-file-in-Django">how to upload-file in Django</a>
