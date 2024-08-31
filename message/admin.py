@@ -1,24 +1,18 @@
 from django.contrib import admin
-from .models import MessageModel
+from .models import *
 
 
-@admin.register(MessageModel)
-class MessageAdmin(admin.ModelAdmin):
-    list_display = ('user', 'blog', 'created')
-    fieldsets = (
-        (
-            'target',
-            {'fields': ('blog', 'user')}
-        ),
-        (
-            'message',
-            {'fields': ('text',)}
-        ),
-        (
-            'date',
-            {'fields': ('created',)}
-        )
-    )
+class MessageAdmin(admin.TabularInline):
+    model = MessageModel
+    can_delete = True
+    extra = 1
+
+
+@admin.register(MessageGroupModel)
+class MessageGroupAdmin(admin.ModelAdmin):
+    list_display = ('blog', 'created')
+    search_fields = ('blog',)
+    ordering = ('created', 'blog')
     readonly_fields = ('created',)
-    ordering = ('user', 'blog', 'created')
-    search_fields = ('blog', 'user')
+    filter_horizontal = ('users',)
+    inlines = (MessageAdmin,)

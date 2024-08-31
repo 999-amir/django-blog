@@ -1,9 +1,11 @@
-from django.urls import path
+from django.urls import path, include
 from . import views
 
 
 app_name = 'message'
 
 urlpatterns = [
-    path('<int:blog_pk>/', views.MessageView.as_view(), name='blog')
+    path('group/<str:blog_title>/', views.MessageView.as_view(), name='group'),
+    path('', views.MessageGroupView.as_view(), name='groups'),
+    path('api/v1/', include('message.api.v1.urls', namespace='api-v1'))
 ]

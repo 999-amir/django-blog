@@ -71,7 +71,11 @@ class CreateBlogContentView(View):
 
     def get(self, request, blog_title):
         forms = self.form_class()
-        return render(request, 'blog/create_blog/content.html', {'forms': forms})
+        context = {
+            'forms': forms,
+            'blog_title': blog_title
+        }
+        return render(request, 'blog/create_blog/content.html', context)
 
     def post(self, request, blog_title):
         forms = self.form_class(request.POST)
@@ -82,10 +86,18 @@ class CreateBlogContentView(View):
             except MultiValueDictKeyError:
                 if cd['text'] == '':
                     messages.warning(request, 'at least one field should be filled', 'amber-600')
-                    return render(request, 'blog/create_blog/content.html', {'forms': forms})
+                    context = {
+                        'forms': forms,
+                        'blog_title': blog_title
+                    }
+                    return render(request, 'blog/create_blog/content.html', context)
                 file = None
             BlogContentModel.objects.create(blog=self.blog, text=cd['text'], file=file)
             messages.success(request, 'new content added', 'green-600')
             return redirect('blog:create-content', self.blog.title)
-        return render(request, 'blog/create_blog/content.html', {'forms': forms})
+        context = {
+            'forms': forms,
+            'blog_title': blog_title
+        }
+        return render(request, 'blog/create_blog/content.html', context)
 

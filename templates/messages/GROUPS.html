@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+
+{% block section %}
+<div class="h-dvh flex justify-center items-center">
+    {% for group in groups %}
+        <a class="px-2 py-1 m-2 rounded-xl border-2 border-violet-700 text-violet-700 transition ease-in-out duration-150 hover:bg-violet-700 hover:text-black cursor-pointer text-xl" href="{% url 'message:group' group.blog.title %}">{{ group.blog.title }}</a>
+    {% endfor %}
+</div>
+{% endblock %}

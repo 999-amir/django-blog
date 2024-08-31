@@ -169,3 +169,15 @@ create blog with text, file, image<br>
 🔴 permissions: everyone can read blog-details but authenticated and activated users can create their own blog, also only author can add content to it's blog
 <h5>📤how to upload-file in django📤</h5>
 💥 checkout my repository 💥 ➡ <a href="https://github.com/999-amir/upload-file-in-Django">how to upload-file in Django</a>
+
+# APP - MESSAGE
+create chat-group for each blog and users can join the group by open messages in each blog<br>
+🔴 permissions: only authenticated and activated and joined-members ( if some non-joined-user open the page it will automatically add to group )<br>
+💥 at the next generation this app will be realtime chat app with display of online users 💥<br>
+<ul>
+    <li>when ever time that a blog created then a message-group will automatically create by signals and also add author to group as blog-author</li>
+    <li>each message-group will be recognized as blog(foreign-key) and users(many-to-many)</li>
+    <li>and also each message will be recognized with message-group, user, text</li>
+    <li>in this case we can split messages by self ( request->user ), author ( message -> message-group -> blog -> user ), others ( message -> user )</li>
+</ul>
+

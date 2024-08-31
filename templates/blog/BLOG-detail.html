@@ -11,7 +11,7 @@
         {% if d.file %}<img class="mx-auto outline outline-2 outline-offset-8 rounded-lg w-[23rem] my-[3rem]" src="{{ d.file.url }}" alt="{{ d.filename }}">{% endif %}
     {% endfor %}
     <div class="w-full flex justify-end">
-        <a class="px-4 py-3 border-2 border-lime-600 text-lime-600 rounded-lg m-5 transition ease-in-out duration-150 hover:bg-lime-600 hover:text-black" href="{% url 'message:blog' blog.pk %}">
+        <a class="px-4 py-3 border-2 border-lime-600 text-lime-600 rounded-lg m-5 transition ease-in-out duration-150 hover:bg-lime-600 hover:text-black" href="{% url 'message:group' blog.title %}">
             open chat-room <span class="outline outline-offset-2 outline-2 rounded-lg">10</span>
         </a>
     </div>
