@@ -1,8 +1,6 @@
 <h1>BLOG + CHAT + PRIVATE_DATA</h1>
 <h3>⚡ DJANGO + REST_API + WEBSOCKET + CELERY + REDIS + DOCKER ⚡</h3>
 <h5>🌀  this is a django project that contain most of the django challenges 🌀 </h5>
-<h5>🔥database diagram:</h5>
-<img src="database_diagram.png" alt="database-diagram">
 
 # ☢️PRIVACY (accounts)☢️
 
@@ -183,3 +181,5 @@ def decrypt(token):  # str[token] -> byte[token] -> decode -> byte[text] -> str[
     <li>in this case we can split messages by self ( request->user ), author ( message -> message-group -> blog -> user ), others ( message -> user )</li>
 </ul>
 
+# 🗂️ database diagram
+<img src="database_diagram.png" alt="database-diagram">
