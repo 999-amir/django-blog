@@ -20,3 +20,6 @@ requests
 
 # encrypt
 cryptography
+
+# third-party-apps
+django-filter

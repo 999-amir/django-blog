@@ -1,8 +1,8 @@
 from django.shortcuts import render, redirect
 from django.views import View
-from .models import BlogModel, BlogContentModel
+from .models import BlogModel, BlogContentModel, CategoryModel
 from django.shortcuts import get_object_or_404
-from .forms import *
+from .forms import CreateBlogTitleForm, CreateBlogContentForm
 from django.contrib import messages
 from django.utils.datastructures import MultiValueDictKeyError
 
@@ -10,8 +10,12 @@ from django.utils.datastructures import MultiValueDictKeyError
 class BlogView(View):
     def get(self, request):
         blog_data = BlogModel.objects.all()
+        category_names = [str(i) for i in request.GET.getlist('category')]
+        if category_names:
+            blog_data = blog_data.filter(category__name__in=category_names)
         context = {
-            'blog_data': blog_data
+            'category': CategoryModel.objects.all(),
+            'blog_data': blog_data,
         }
         return render(request, 'blog/BLOG.html', context)
 
@@ -41,19 +45,32 @@ class CreateBlogTitleView(View):
 
     def get(self, request):
         forms = self.form_class()
-        return render(request, 'blog/create_blog/title.html', {'forms': forms})
+        category = CategoryModel.objects.all()
+        context = {
+            'forms': forms,
+            'category': category
+        }
+        return render(request, 'blog/create_blog/title.html', context)
 
     def post(self, request):
         forms = self.form_class(request.POST)
+        category = CategoryModel.objects.all()
+        context = {
+            'forms': forms,
+            'category': category
+        }
         if forms.is_valid():
             cd = forms.cleaned_data
             if BlogModel.objects.filter(title=cd['title']).exists():
                 messages.warning(request, 'title already exist', 'amber-600')
-                return render(request, 'blog/create_blog/title.html', {'forms': forms})
+                return render(request, 'blog/create_blog/title.html', context)
             blog = BlogModel.objects.create(title=cd['title'], snippet=cd['snippet'], user=request.user)
+            for c in cd['category']:
+                blog.category.add(c)
+            blog.save()
             messages.success(request, 'title created', 'green-600')
             return redirect('blog:create-content', blog.title)
-        return render(request, 'blog/create_blog/title.html', {'forms': forms})
+        return render(request, 'blog/create_blog/title.html', context)
 
 
 class CreateBlogContentView(View):

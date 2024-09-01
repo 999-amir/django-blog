@@ -1,5 +1,11 @@
 from rest_framework import serializers
-from blog.models import BlogModel, BlogContentModel
+from blog.models import BlogModel, BlogContentModel, CategoryModel
+
+
+class CategorySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CategoryModel
+        fields = ('name', 'color', 'created')
 
 
 class BlogSerializer(serializers.ModelSerializer):
@@ -8,7 +14,7 @@ class BlogSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = BlogModel
-        fields = ('user', 'title', 'snippet', 'created', 'updated', 'absolute_url', 'content_url')
+        fields = ('user', 'title', 'snippet', 'category', 'created', 'updated', 'absolute_url', 'content_url')
         read_only_fields = ('user', 'created', 'updated')
 
     def to_representation(self, instance):
@@ -17,6 +23,7 @@ class BlogSerializer(serializers.ModelSerializer):
             rep['user'] = instance.user.name
         else:
             rep['user'] = 'user_deleted'
+        rep['category'] = [c.name for c in instance.category.all()]
         request = self.context.get('request')
         if request.parser_context.get('kwargs').get('pk'):
             rep.pop('absolute_url', None)

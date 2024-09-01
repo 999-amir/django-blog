@@ -1,12 +1,12 @@
 <h1>BLOG + CHAT + PRIVATE_DATA</h1>
 <h3>⚡ DJANGO + REST_API + WEBSOCKET + CELERY + REDIS + DOCKER ⚡</h3>
-<h5>this is a django project that contain most of the django challenges</h5>
+<h5>🌀  this is a django project that contain most of the django challenges 🌀 </h5>
 
 # ☢️PRIVACY (accounts)☢️
 
-<h5>contain registration, login, logout, change-password, forget-password using Session, Token, JWT</h5>
+<h5>🎴 contain registration, login, logout, change-password, forget-password using Session, Token, JWT</h5>
 ✅links -> <a href="https://docs.djangoproject.com/en/5.1/topics/auth/default/">Session</a> | <a href="https://www.django-rest-framework.org/api-guide/authentication/">Token</a> | <a href="https://jwt.io/">JWT</a>
-<h5>⚙️signup</h5>
+<h5>🔥 signup</h5>
 <ul>
     <li>prevent authenticated users to open signup page</li>
     <li>password, confirm-password
@@ -21,7 +21,7 @@
     <li>email nad name are unique so it's impossible to set registered email or name</li>
 </ul>
 
-<h5>⚙️login</h5>
+<h5>🔥 login</h5>
 <ul>
     <li>Session
         <ul>
@@ -45,7 +45,7 @@
     </li>
 </ul>
 
-<h5>⚙️logout</h5>
+<h5>🔥 logout</h5>
 <ul>
     <li>Session
         <ul>
@@ -59,7 +59,7 @@
     </li>
 </ul>
 
-<h5>⚙️activate user ( with JWT )</h5>
+<h5>🔥 activate user ( with JWT )</h5>
 <ul>
     <li>generate and send token
         <ul>
@@ -82,10 +82,10 @@
         </ul>
     </li>
 </ul>
-<p>◆ in webpage email will automatically send with user who authenticated ( there is not field )</p>
+<p>🌀 in webpage email will automatically send with user who authenticated ( there is not field )</p>
 
-<h5>⚙️forget password ( with JWT and auto-activation for user )</h5>
-<p>it similar with change-password but we should get user with token, look line activation user ( with JWT )</p>
+<h5>🔥 forget password ( with JWT and auto-activation for user )</h5>
+<p>🌀 it similar with change-password but we should get user with token, look line activation user ( with JWT )</p>
 <ul>
     <li>generate and send token
         <ul>
@@ -110,10 +110,10 @@
     </li>
 </ul>
 
-<h5>⚙️track users</h5>
-<p>used for count users per each day and also show users logged in devices ( for more privacy )</p>
-<p>track-users added to middleware so this method will check in each request</p>
-<p>each user or system will be saved if there is no similar object in database with below items</p>
+<h5>🔥 track users</h5>
+<p>🌀 used for count users per each day and also show users logged in devices ( for more privacy )<br>
+🌀 track-users added to middleware so this method will check in each request<br>
+🌀 each user or system will be saved if there is no similar object in database with below items</p>
 <ul>
     <li>USER: if there is non-authenticated-user it will set with Blank</li>
     <li>IP: using "HTTP_X_FORWARDED_FOR" or "REMOTE_ADDR"</li>
@@ -121,7 +121,7 @@
 </ul>
 
 # ☣️APP - PRIVATE_DATA☣️
-<p>this app is just contain username and password field that save data in DB but the point is that both of username and password will be saved after encrypted by 🔐CRYPTOGRAPHY🔐<br>
+<p>🎴 this app is just contain username and password field that save data in DB but the point is that both of username and password will be saved after encrypted by 🔐CRYPTOGRAPHY🔐<br>
 🔴 it could be so usefull for SECURITY and DATABASE-ATTACK<br>
 🔵 this app will also check authentication and activation of users
 </p>
@@ -165,13 +165,13 @@ def decrypt(token):  # str[token] -> byte[token] -> decode -> byte[text] -> str[
 </p>
 
 # APP - BLOG
-create blog with text, file, image<br>
+🎴 this app used for create blog with text, file, image. also each blog orgnized as unique-title, summary and multiple-category<br>
 🔴 permissions: everyone can read blog-details but authenticated and activated users can create their own blog, also only author can add content to it's blog
 <h5>📤how to upload-file in django📤</h5>
 💥 checkout my repository 💥 ➡ <a href="https://github.com/999-amir/upload-file-in-Django">how to upload-file in Django</a>
 
 # APP - MESSAGE
-create chat-group for each blog and users can join the group by open messages in each blog<br>
+🎴 this app used for create chat-group for each blog and users can join the group by open messages in each blog<br>
 🔴 permissions: only authenticated and activated and joined-members ( if some non-joined-user open the page it will automatically add to group )<br>
 💥 at the next generation this app will be realtime chat app with display of online users 💥<br>
 <ul>

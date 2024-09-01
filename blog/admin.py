@@ -1,5 +1,10 @@
 from django.contrib import admin
-from .models import BlogModel, BlogContentModel
+from .models import BlogModel, BlogContentModel, CategoryModel
+
+@admin.register(CategoryModel)
+class CategoryAdmin(admin.ModelAdmin):
+    list_display = ('name', 'color', 'created')
+    list_editable = ('color',)
 
 
 class BlogContentInline(admin.TabularInline):
@@ -14,10 +19,11 @@ class BlogAdmin(admin.ModelAdmin):
     fieldsets = (
         (
             'information',
-            {'fields': ('user', 'title', 'snippet', 'updated', 'created')}
+            {'fields': ('user', 'title', 'snippet', 'category', 'updated', 'created')}
         ),
     )
-    search_fields = ('title',)
+    search_fields = ('category', 'title')
     ordering = ('title', 'updated', 'created')
     readonly_fields = ('updated', 'created')
     inlines = (BlogContentInline,)
+    filter_horizontal = ('category',)

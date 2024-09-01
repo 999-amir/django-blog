@@ -1,12 +1,17 @@
 from rest_framework.viewsets import ModelViewSet
-from blog.models import BlogModel, BlogContentModel
-from .serializers import BlogSerializer, BlogDetailSerializer
+from blog.models import BlogModel, BlogContentModel, CategoryModel
+from .serializers import BlogSerializer, BlogDetailSerializer, CategorySerializer
 from .permissions import IsOwnerOrReadonly
 from rest_framework.generics import GenericAPIView
 from rest_framework.response import Response
 from django.shortcuts import get_object_or_404
 from django.utils.datastructures import MultiValueDictKeyError
 from rest_framework import status
+
+
+class CategoryAPIView(ModelViewSet):
+    serializer_class = CategorySerializer
+    queryset = CategoryModel.objects.all()
 
 
 class BlogAPIView(ModelViewSet):

@@ -3,7 +3,20 @@ import os
 from accounts.models import CostumeUser
 
 
+class CategoryModel(models.Model):
+    name = models.CharField(max_length=50, unique=True)
+    color = models.CharField(max_length=20, default='lime-600')
+    created = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ('name',)
+
+    def __str__(self):
+        return self.name
+
+
 class BlogModel(models.Model):
+    category = models.ManyToManyField(CategoryModel)
     user = models.ForeignKey(CostumeUser, on_delete=models.SET_NULL, null=True, blank=True)
     title = models.CharField(max_length=20, unique=True)
     snippet = models.CharField(max_length=250)

@@ -11,7 +11,16 @@
           <textarea type="text" name="snippet" id="snippet" class="block py-2.5 px-0 w-full text-sm bg-transparent border-0 border-b-2 appearance-none text-lime-600 border-gray-600 focus:border-lime-600 focus:outline-none focus:ring-0 peer" placeholder=" " required></textarea>
           <label for="snippet" class="peer-focus:font-medium absolute text-sm text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-lime-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Summary</label>
       </div>
-      <button type="submit" class="text-center w-[50%] mt-[1rem] bg-zinc-900 rounded-lg p-2 text-lime-600 border-2 border-lime-600 cursor-pointer transition ease-in-out duration-150 hover:bg-lime-700 hover:text-black">SUBMIT</button>
+        <div class="relative z-0 w-full mb-5 group">
+            <label for="id_category" class="block mb-2 text-sm font-medium text-gray-400">category</label>
+            <select name="category" required="" id="id_category" multiple="" size="8" class="border text-sm rounded-lg block w-full p-2.5 bg-black border-lime-600 text-gray-400">
+                {% for c in category %}
+                    <option value="{{ c.id }}" class="hover:bg-lime-600 hover:text-black rounded">{{ c.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <button type="submit" class="text-center w-[50%] mt-[1rem] bg-zinc-900 rounded-lg p-2 text-lime-600 border-2 border-lime-600 cursor-pointer transition ease-in-out duration-150 hover:bg-lime-700 hover:text-black">SUBMIT</button>
     </form>
+
 </div>
 {% endblock %}

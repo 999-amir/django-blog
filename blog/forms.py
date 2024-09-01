@@ -1,9 +1,11 @@
 from django import forms
+from .models import BlogModel
 
 
-class CreateBlogTitleForm(forms.Form):
-    title = forms.CharField(max_length=20)
-    snippet = forms.CharField(max_length=250)
+class CreateBlogTitleForm(forms.ModelForm):
+    class Meta:
+        model = BlogModel
+        fields = ('title', 'snippet', 'category')
 
 
 class CreateBlogContentForm(forms.Form):
