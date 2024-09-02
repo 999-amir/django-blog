@@ -1,5 +1,5 @@
 <h1>BLOG + CHAT + PRIVATE_DATA</h1>
-<h3>⚡ DJANGO + REST_API + WEBSOCKET + CELERY + REDIS + DOCKER ⚡</h3>
+<h3>⚡ DJANGO + REST_API + HTMX + WEBSOCKET + DOCKER + CELERY + REDIS ⚡</h3>
 <h5>🌀  this is a django project that contain most of the django challenges 🌀 </h5>
 
 # ☢️PRIVACY (accounts)☢️
