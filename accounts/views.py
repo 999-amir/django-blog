@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.views import View
 from .forms import *
-from .models import CostumeUser
+from .models import CostumeUser, TrackingUserModel
 from django.contrib import messages
 from django.contrib.auth import login, logout, authenticate, update_session_auth_hash
 from .incs import check_signup_data, check_password_strength
@@ -186,6 +186,9 @@ class ConfirmForgetPasswordView(View):
                 user.is_verify = True
                 user.save()
             user.set_password(cd['new_password1'])
+            for track in TrackingUserModel.objects.filter(user=user):
+                track.user = None
+                track.save()
             user.save()
             messages.success(request, 'password changed successfully', 'cyan-600')
             return redirect('home:main_page')

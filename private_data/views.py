@@ -6,6 +6,7 @@ from django.contrib import messages
 from .cryptography import encrypt, decrypt
 from .forms import CreateNewPrivateDataForm
 
+
 class PrivateDataView(View):
 
     def dispatch(self, request, *args, **kwargs):
@@ -40,7 +41,7 @@ class PrivateDataDetailView(View):
         private_data = get_object_or_404(PrivateDataModel, user=request.user, pk=private_pk)
         msg_text = f'USERNAME: {decrypt(private_data.username)}<br>PASSWORD: {decrypt(private_data.password)}'
         messages.success(request, msg_text, 'red-600')
-        return redirect('private-data:main_page')
+        return render(request, 'incs/notification.html')
 
 
 class CreateNewPrivateDataView(View):
@@ -66,4 +67,3 @@ class CreateNewPrivateDataView(View):
             PrivateDataModel.objects.create(user=request.user, title=cd['title'], username=encrypt(cd['username']), password=encrypt(cd['password']))
             messages.success(request, 'username and password saved', 'green-600')
             return redirect('private-data:main_page')
-        return render(request, 'private_data/CREATE_NEW.html', {'forms': forms})

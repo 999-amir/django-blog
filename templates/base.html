@@ -9,6 +9,7 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://unpkg.com/hyperscript.org@0.9.12"></script>
     <script src="https://cdn.lordicon.com/lordicon.js"></script>
+    <script src="https://unpkg.com/htmx.org@2.0.2"></script>
     <style>
         body {
             font-family: "Martian Mono", sans-serif;
@@ -22,9 +23,9 @@
         <aside class="flex-none w-[18rem] h-dvh">
             <div class="grid grid-cols-1 gap-2 m-2">
                 <a class="bg-zinc-900 rounded-lg p-2 text-lime-600 border-2 border-lime-600 cursor-pointer transition ease-in-out duration-150 hover:bg-lime-700 hover:text-black" href="{% url 'home:main_page' %}">HOME</a>
-                <a class="bg-zinc-900 rounded-lg p-2 text-lime-600 border-2 border-lime-600 cursor-pointer transition ease-in-out duration-150 hover:bg-lime-700 hover:text-black" href="{% url 'blog:main_page' %}">BLOG</a>
-            <a class="bg-zinc-900 rounded-lg p-2 text-lime-600 border-2 border-lime-600 cursor-pointer transition ease-in-out duration-150 hover:bg-lime-700 hover:text-black" href="{% url 'message:groups' %}">MESSAGES</a>
-                <a class="bg-zinc-900 rounded-lg p-2 text-lime-600 border-2 border-lime-600 cursor-pointer transition ease-in-out duration-150 hover:bg-lime-700 hover:text-black" href="{% url 'private-data:main_page' %}">PRIVATE DATA</a>
+                <a hx-get="{% url 'blog:main_page' %}" hx-target="#block_section" hx-swap="innerHTML"  class="bg-zinc-900 rounded-lg p-2 text-lime-600 border-2 border-lime-600 cursor-pointer transition ease-in-out duration-150 hover:bg-lime-700 hover:text-black">BLOG</a>
+                <a hx-get="{% url 'message:groups' %}" hx-target="#block_section" hx-swap="innerHTML" class="bg-zinc-900 rounded-lg p-2 text-lime-600 border-2 border-lime-600 cursor-pointer transition ease-in-out duration-150 hover:bg-lime-700 hover:text-black">MESSAGES</a>
+                <a hx-get="{% url 'private-data:main_page' %}" hx-target="#block_section" hx-swap="innerHTML" class="bg-zinc-900 rounded-lg p-2 text-lime-600 border-2 border-lime-600 cursor-pointer transition ease-in-out duration-150 hover:bg-lime-700 hover:text-black">PRIVATE DATA</a>
                 <div class="text-lime-600 bg-zinc-900 rounded-lg p-3 border border-lime-600 mt-3">
                     <p>fast-access-links</p>
                     <div class="ml-5 mt-2 grid grid-cols-1 gap-1" style="font-size: 12px">
@@ -35,7 +36,7 @@
                 </div>
             </div>
         </aside>
-        <section class="grow h-dvh mx-5 overflow-y-scroll">
+        <section class="grow h-dvh mx-5 overflow-y-scroll" id="block_section">
             {% block section %}
             {% endblock %}
         </section>

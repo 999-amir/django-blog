@@ -1,29 +1,17 @@
-from django.shortcuts import render
-from django.views import View
-from datetime import datetime, timedelta
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from home.views import track_previous_days
 from accounts.models import TrackingUserModel
 from blog.models import BlogModel
 from message.models import MessageModel
+from datetime import datetime, timedelta
 
 
-def track_previous_days(objects):
-    data = {
-        'count': [],
-        'date': []
-    }
-    for i in range(31, -1, -1):  # count reverse from 10 days ago to today
-        date = datetime.now() - timedelta(days=i)
-        objs = objects.filter(created=date)
-        data['count'].append(objs.count())
-        data['date'].append(int(date.strftime("%d")))
-    return data
-
-
-class HomeView(View):
+class HomeAPIView(APIView):
     def get(self, request):
         systems = []
         if request.user.is_authenticated:
-            user_tracks = TrackingUserModel.objects.filter(user=request.user, created__gte=datetime.now()-timedelta(days=10))
+            user_tracks = TrackingUserModel.objects.filter(user=request.user, created__gte=datetime.now() - timedelta(days=10))
             for user_track in user_tracks:
                 if not user_track.system in systems:
                     systems.append(user_track.system)
@@ -35,4 +23,4 @@ class HomeView(View):
             'track_messages': track_previous_days(MessageModel.objects.all()),
             'systems': systems
         }
-        return render(request, 'home/HOME.html', context)
+        return Response(context)

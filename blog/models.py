@@ -9,7 +9,7 @@ class CategoryModel(models.Model):
     created = models.DateTimeField(auto_now_add=True)
 
     class Meta:
-        ordering = ('name',)
+        ordering = ('name', 'id')
 
     def __str__(self):
         return self.name
@@ -21,11 +21,11 @@ class BlogModel(models.Model):
     title = models.CharField(max_length=20, unique=True)
     snippet = models.CharField(max_length=250)
 
-    updated = models.DateTimeField(auto_now=True)
-    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateField(auto_now=True)
+    created = models.DateField(auto_now_add=True)
 
     class Meta:
-        ordering = ['-updated']
+        ordering = ['-updated', '-id']
 
     def __str__(self):
         return self.title
@@ -36,8 +36,8 @@ class BlogContentModel(models.Model):
     text = models.TextField(null=True, blank=True)
     file = models.FileField(upload_to='blog-files/%y/%m/%d/', null=True, blank=True)
 
-    updated = models.DateTimeField(auto_now=True)
-    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateField(auto_now=True)
+    created = models.DateField(auto_now_add=True)
 
     @property
     def filename(self):
@@ -51,7 +51,7 @@ class BlogContentModel(models.Model):
             return False
 
     class Meta:
-        ordering = ['created']
+        ordering = ['-created', 'id']
 
     def __str__(self):
         return self.blog.title

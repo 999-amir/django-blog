@@ -15,7 +15,7 @@ class BlogView(View):
             blog_data = blog_data.filter(category__name__in=category_names)
         context = {
             'category': CategoryModel.objects.all(),
-            'blog_data': blog_data,
+            'blog_data': blog_data
         }
         return render(request, 'blog/BLOG.html', context)
 
@@ -69,8 +69,7 @@ class CreateBlogTitleView(View):
                 blog.category.add(c)
             blog.save()
             messages.success(request, 'title created', 'green-600')
-            return redirect('blog:create-content', blog.title)
-        return render(request, 'blog/create_blog/title.html', context)
+            return render(request, 'blog/create_blog/content.html', {'blog_title': blog.title})
 
 
 class CreateBlogContentView(View):
@@ -85,14 +84,6 @@ class CreateBlogContentView(View):
             return redirect('home:main_page')
         self.blog = get_object_or_404(BlogModel, title=self.kwargs['blog_title'], user=request.user)
         return super().dispatch(request, *args, **kwargs)
-
-    def get(self, request, blog_title):
-        forms = self.form_class()
-        context = {
-            'forms': forms,
-            'blog_title': blog_title
-        }
-        return render(request, 'blog/create_blog/content.html', context)
 
     def post(self, request, blog_title):
         forms = self.form_class(request.POST)
@@ -111,10 +102,4 @@ class CreateBlogContentView(View):
                 file = None
             BlogContentModel.objects.create(blog=self.blog, text=cd['text'], file=file)
             messages.success(request, 'new content added', 'green-600')
-            return redirect('blog:create-content', self.blog.title)
-        context = {
-            'forms': forms,
-            'blog_title': blog_title
-        }
-        return render(request, 'blog/create_blog/content.html', context)
-
+            return render(request, 'blog/create_blog/content.html', {'blog_title': blog_title})

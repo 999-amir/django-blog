@@ -183,3 +183,10 @@ def decrypt(token):  # str[token] -> byte[token] -> decode -> byte[text] -> str[
 
 # 🗂️ database diagram
 <img src="database_diagram.png" alt="database-diagram">
+
+# 🌀 HTMX & HYPERSCRIPT 🌀
+<p>🎴 used for convert [blog, message, private_data] tasks into asynchronous tasks<br>
+it also make views much faster because there is no need for full-render. with HTMX we can update our selected part in page<br>
+🌀 checkout network requests in ◆ website -> home-page -> inspect -> network ◆</p>
+
+💥 checkout my repository 💥 ➡ <a href="https://github.com/999-amir/django-messager">how to use HTMX in Django</a>

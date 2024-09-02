@@ -1,37 +1,15 @@
-{% extends 'base.html' %}
-
-{% block section %}
 <div class="overflow-y-scroll h-[83%] flex flex-col-reverse" id="chat-messages">
-    <div class="w-[70%] mx-auto">
-
+<fade-in class="opacity-0 ease-in-out" _="on load transition my opacity to 1 over 0.2 seconds">
+    <div class="w-[70%] mx-auto" id="htmx-messages">
 
         {% for msg in message_group.rel_group_messages.all %}
-            {% if message_group.blog.user == msg.user %}
-                <div class="text-slate-500 my-2 p-3 bg-zinc-900 border border-orange-700 rounded-lg float-left w-[30rem]">
-                    <p class="text-xs text-orange-700 mb-2">/{{ msg.user.name }}/ (blog-author)</p>
-                    <p>{{ msg.text }}</p>
-                </div>
-            {% else %}
-            {% if msg.user == request.user %}
-                <div class="text-slate-500 my-2 p-3 bg-zinc-900 border border-lime-700 rounded-lg float-left w-[30rem]">
-                    <p class="text-xs text-lime-700 mb-2">/{{ msg.user.name }}/</p>
-                    <p>{{ msg.text }}</p>
-                </div>
-            {% else %}
-                <div class="text-slate-500 my-2 p-3 bg-zinc-900 border border-cyan-700 rounded-lg float-right w-[30rem]">
-                    <p class="text-xs text-cyan-700 mb-2">/{{ msg.user.name }}/</p>
-                    <p>{{ msg.text }}</p>
-                </div>
-            {% endif %}
-            {% endif %}
+            {% include 'messages/messages_owner.html' %}
         {% endfor %}
 
-
-
     </div>
-</div>
+
 <div class="absolute bottom-11 right-0 w-full">
-    <form class="flex w-[40%] mx-auto" method="post">{% csrf_token %}
+    <form class="flex w-[40%] mx-auto" method="post" hx-post="{% url 'message:group' message_group.blog.title %}" hx-target="#htmx-messages" hx-swap="beforeend" _="on htmx:afterRequest reset() me">{% csrf_token %}
         <input placeholder="type ..." autofocus name="message"
                class="w-full placeholder-gray-500 px-4 rounded-md py-3 text-left border border-2 border-lime-800 text-lime-500 bg-black">
         <button type="submit"
@@ -44,4 +22,5 @@
         </button>
     </form>
 </div>
-{% endblock %}
+</fade-in>
+</div>

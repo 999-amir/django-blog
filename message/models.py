@@ -21,7 +21,7 @@ class MessageModel(models.Model):
     user = models.ForeignKey(CostumeUser, on_delete=models.SET_NULL, null=True, blank=True)
     text = models.TextField(max_length=300)
 
-    created = models.DateTimeField(auto_now_add=True)
+    created = models.DateField(auto_now_add=True)
 
     class Meta:
         ordering = ('created',)

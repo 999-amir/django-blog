@@ -1,8 +1,6 @@
-{% extends 'base.html' %}
-
-{% block section %}
-<div class="h-dvh flex justify-center items-center">
-    <form class="w-[35%] mx-auto" method="post">{% csrf_token %}
+<div class="h-dvh flex justify-center items-center" id="inside_section">
+    <fade-in class="opacity-0 ease-in-out" _="on load transition my opacity to 1 over 0.2 seconds">
+    <form class="w-[35%] mx-auto" method="post" hx-post="{% url 'private-data:create-new' %}" hx-target="#inside_section" hx-swap="outerHTML">{% csrf_token %}
       <p class="text-red-700 text-center">username and password will be encrypted by crytography and also used with decryption</p>
       <p class="text-red-700 mb-[2.5rem] text-center">[ to prevent database attack ]</p>
       <div class="relative z-0 w-full mb-5 group">
@@ -19,5 +17,5 @@
       </div>
       <button type="submit" class="text-center w-[50%] mt-[1rem] bg-zinc-900 rounded-lg p-2 text-lime-600 border-2 border-lime-600 cursor-pointer transition ease-in-out duration-150 hover:bg-lime-700 hover:text-black">SUBMIT</button>
     </form>
+    </fade-in>
 </div>
-{% endblock %}

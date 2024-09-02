@@ -21,7 +21,6 @@ class MessageGroupView(View):
         context = {
             'groups': groups
         }
-        messages.success(request, 'here is your previous groups ( when you open message in blog, you will automatically add to group )', 'violet-700')
         return render(request, 'messages/GROUPS.html', context)
 
 
@@ -56,5 +55,9 @@ class MessageView(View):
             message_group.save()
         forms = self.form_class(request.POST)
         if forms.is_valid():
-            MessageModel.objects.create(user=request.user, group=message_group, text=forms.cleaned_data['message'])
-        return redirect('message:group', blog_title)
+            msg = MessageModel.objects.create(user=request.user, group=message_group, text=forms.cleaned_data['message'])
+            context ={
+                'msg': msg,
+                'message_group': message_group
+            }
+            return render(request, 'messages/messages_owner.html', context)

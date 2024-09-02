@@ -4,44 +4,40 @@
 <h3 class="px-5 text-lime-600 mt-5">charts:</h3>
 <div class="p-5 grid grid-cols-2 gap-2 h-[20rem]">
     <div>
-    <canvas id="full-finance-btc"></canvas>
+    <canvas id="track_users"></canvas>
     </div>
     <div>
-    <canvas id="full-finance-eth"></canvas>
+    <canvas id="track_blog"></canvas>
     </div>
+    <div>
+    <canvas id="track_messages"></canvas>
+    </div>
+    <div>
+    <canvas id="track_online_users"></canvas>
+    </div>
+    {% if systems %}
+    <div class="p-5 col-span-2 gap-2 text-red-700 text-xs border border-red-900 rounded-lg mt-[3rem]">
+        <p class="text-sm text-zinc-700">! if there is unknown-devices you should change your password using <a href="{% url 'accounts:forget-password' %}" class="underline underline-offset-4 text-red-700">forget-password</a><br> ( this item can track previous 10 days of your logged in system using middleware ) !</p>
+        <div class="bg-red-950 h-[2px] w-[90%] mx-auto mb-3 mt-2"></div>
+        {% for system in systems %}
+        <p>🔒 {{ system }}</p>
+        {% endfor %}
+    </div>
+    {% endif %}
 </div>
-<h3 class="px-5 text-violet-600 mt-5">favorite:</h3>
-<div class="p-5 gird grid-cols-20 gap-2 text-violet-700 text-xs">
-    <a href="#" class="border-2 border-violet-950 transition ease-in-out duration-150 hover:bg-violet-950 rounded-2xl px-3 py-2">czczx</a>
-</div>
-<h3 class="px-5 text-cyan-600 mt-5">news:</h3>
-<div class="p-5 gird grid-cols-20 gap-2 text-black text-xs">
-    <a href="#" class="bg-cyan-800 transition ease-in-out duration-150 hover:bg-cyan-700 rounded-2xl px-3 py-2">czczx</a>
-    <a href="#" class="bg-cyan-800 transition ease-in-out duration-150 hover:bg-cyan-700 rounded-2xl px-3 py-2">czczx</a>
-    <a href="#" class="bg-cyan-800 transition ease-in-out duration-150 hover:bg-cyan-700 rounded-2xl px-3 py-2">czczx</a>
-    <a href="#" class="bg-cyan-800 transition ease-in-out duration-150 hover:bg-cyan-700 rounded-2xl px-3 py-2">czczx</a>
-    <a href="#" class="bg-cyan-800 transition ease-in-out duration-150 hover:bg-cyan-700 rounded-2xl px-3 py-2">czczx</a>
-    <a href="#" class="bg-cyan-800 transition ease-in-out duration-150 hover:bg-cyan-700 rounded-2xl px-3 py-2">czczx</a>
-    <a href="#" class="bg-cyan-800 transition ease-in-out duration-150 hover:bg-cyan-700 rounded-2xl px-3 py-2">czczx</a>
-</div>
-{% if user.is_authenticated %}
-<div class="p-5 gird grid-cols-1 gap-2 text-red-700 text-xs border border-red-900 rounded-lg m-5">
-    <p class="text-sm mb-3">! if there is unknown-devices you should <a href="{% url 'accounts:change-password' %}" class="underline underline-offset-4">change-password</a> !</p>
-    <p>Windows provides a variety of configuration tools tailored to meet the needs of different users. These built-in tools facilitate your device's customization and monitoring, allowing you to change Windows' configuration to suit your preferences and requirements with precision.</p>
-</div>
-{% endif %}
+
 {% endblock %}
 
 {% block script %}
 <script>
-  const full_finance_btc = document.getElementById('full-finance-btc');
-  new Chart(full_finance_btc, {
+  const track_users = document.getElementById('track_users');
+  new Chart(track_users, {
     type: 'line',
     data: {
-      labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+      labels: {{ track_users.date }},
       datasets: [{
-        label: 'site visit',
-        data: [12, 19, 3, 5, 2, 3],
+        label: 'number of users that opened website',
+        data: {{ track_users.count }},
         borderWidth: 1,
         borderColor: '#65a30d',
         backgroundColor: '#65a30d',
@@ -56,14 +52,57 @@
     }
   });
 
-  const full_finance_eth = document.getElementById('full-finance-eth');
-  new Chart(full_finance_eth, {
+  const track_blog = document.getElementById('track_blog');
+  new Chart(track_blog, {
     type: 'line',
     data: {
-      labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+      labels: {{ track_blog.date }},
       datasets: [{
-        label: 'BTC',
-        data: [12, 19, 3, 5, 2, 3],
+        label: 'number of created-blogs',
+        data: {{ track_blog.count }},
+        borderWidth: 1,
+        borderColor: '#65a30d',
+        backgroundColor: '#65a30d',
+      }]
+    },
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      }
+    }
+  });
+
+  const track_messages = document.getElementById('track_messages');
+  new Chart(track_messages, {
+    type: 'line',
+    data: {
+      labels: {{ track_messages.date }},
+      datasets: [{
+        label: 'number of created-messages',
+        data: {{ track_messages.count }},
+        borderWidth: 1,
+        borderColor: '#65a30d',
+        backgroundColor: '#65a30d',
+      }]
+    },
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      }
+    }
+  });
+    const track_online_users = document.getElementById('track_online_users');
+  new Chart(track_online_users, {
+    type: 'line',
+    data: {
+      labels: [1, 2, 3, 4, 5, 6, 7],
+      datasets: [{
+        label: 'number of online users',
+        data: [1, 5, 1, 9, 8, 6, 7],
         borderWidth: 1,
         borderColor: '#65a30d',
         backgroundColor: '#65a30d',
