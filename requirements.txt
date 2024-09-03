@@ -23,3 +23,6 @@ cryptography
 
 # third-party-apps
 django-filter
+
+#websocket
+channels["daphne"]

@@ -1,7 +1,7 @@
 <div class="w-[80%] mx-auto mt-5 text-slate-600" id="inside_section">
 <fade-in class="opacity-0 ease-in-out" _="on load transition my opacity to 1 over 0.2 seconds">
     <h3 class="px-5 mt-5">filters:</h3>
-    <form class="p-5 gird grid-cols-20 gap-2 text-xs mx-5" method="get">
+    <form class="p-5 gird grid-cols-20 gap-2 text-xs mx-5" hx-get="{% url 'blog:main_page' %}" hx-target="#inside_section" hx-swap="outerHTML" _="on htmx:afterRequest reset() me">
         {% for c in category %}
             <input class="bg-black" type="checkbox" name="category" id="{{ c.name }}" value="{{ c.name }}">
             <label class="text-blue-700" for="{{ c.name }}">{{ c.name }}</label>/

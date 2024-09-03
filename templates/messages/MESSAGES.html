@@ -9,7 +9,8 @@
     </div>
 
 <div class="absolute bottom-11 right-0 w-full">
-    <form class="flex w-[40%] mx-auto" method="post" hx-post="{% url 'message:group' message_group.blog.title %}" hx-target="#htmx-messages" hx-swap="beforeend" _="on htmx:afterRequest reset() me">{% csrf_token %}
+    <div id="htmx-online-users" class="absolute bottom-1 left-7"></div>
+    <form class="flex w-[40%] mx-auto" method="post" hx-ext="ws" ws-connect="/ws/message/group/{{ message_group.blog.title }}" ws-send _="on htmx:wsAfterSend reset() me">{% csrf_token %}
         <input placeholder="type ..." autofocus name="message"
                class="w-full placeholder-gray-500 px-4 rounded-md py-3 text-left border border-2 border-lime-800 text-lime-500 bg-black">
         <button type="submit"

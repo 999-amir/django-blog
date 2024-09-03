@@ -14,5 +14,5 @@ class MessageGroupAdmin(admin.ModelAdmin):
     search_fields = ('blog',)
     ordering = ('created', 'blog')
     readonly_fields = ('created',)
-    filter_horizontal = ('users',)
+    filter_horizontal = ('users', 'online_users')
     inlines = (MessageAdmin,)

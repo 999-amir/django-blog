@@ -190,3 +190,10 @@ it also make views much faster because there is no need for full-render. with HT
 🌀 checkout network requests in ◆ website -> home-page -> inspect -> network ◆</p>
 
 💥 checkout my repository 💥 ➡ <a href="https://github.com/999-amir/django-messager">how to use HTMX in Django</a>
+
+# 🤖 WEBSOCKET 🤖
+🎴 used for make realtime chat application that can show new messages without refreshing the page and also show online-users
+
+🔥 what is websocket:<br>The WebSocket API is an advanced technology that makes it possible to open a two-way interactive communication session between the user's browser and a server. With this API, you can send messages to a server and receive event-driven responses without having to poll the server for a reply
+
+💥 checkout my repository 💥 ➡ <a href="https://github.com/999-amir/django-messager">simple example of django-message-app</a>

@@ -6,6 +6,7 @@ from blog.models import BlogModel
 class MessageGroupModel(models.Model):
     blog = models.ForeignKey(BlogModel, on_delete=models.CASCADE)
     users = models.ManyToManyField(CostumeUser, related_name='rel_user_groups')
+    online_users = models.ManyToManyField(CostumeUser)
 
     created = models.DateTimeField(auto_now_add=True)
 
