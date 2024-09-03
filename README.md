@@ -196,4 +196,17 @@ it also make views much faster because there is no need for full-render. with HT
 
 🔥 what is websocket:<br>The WebSocket API is an advanced technology that makes it possible to open a two-way interactive communication session between the user's browser and a server. With this API, you can send messages to a server and receive event-driven responses without having to poll the server for a reply
 
+✅ Source -> <a href="https://channels.readthedocs.io/en/latest/">django-channels</a><br>
 💥 checkout my repository 💥 ➡ <a href="https://github.com/999-amir/django-messager">simple example of django-message-app</a>
+
+🌀 steps of create websocket:<br>
+1- install 🐍channels-package<br>
+2- add it to ️⚙️INSTALLED_APPS( daphne )<br>
+3- change from ️⚙️"WSGI_APPLICATION"into ️⚙️"ASGI_APPLICATION"<br>
+4- add websocket to 📁core/asgi.py and link it with 📁app/routing.py<br>
+5- create 📁app/routing.py and link it with 📁app/consumer.py<br>
+6- create 📁app/consumer.py with inherit class of 🐍WebsocketConsumer with<br>[ 🟩connect, 🟪receive, 🟥disconnect ] methods ( each method should be connected with the same channel to make users connected and show changes on page to eachother )<br><br>
+7- 🟩connect-method used for evaluate 🔒user-access ( permissions ) for accept 🤝hand-shake and make group, user to initialize with others-methods and also save user in database as online_user<br>
+8- 🟥disconnect-method is called when user get out of the page, it also used to remove user from online_users in database<br>
+9- 🟪receive-method used for edit or change database-models such as save new messages text and send saved-element-id into 🕹️function-handler-method<br>
+10-🕹️in function-handler-method we make visualization for all users that in the same channel by the way of create context and send it to template. at the next template will be send to current-page so we should use template with hx-swap-oob in HTMX
