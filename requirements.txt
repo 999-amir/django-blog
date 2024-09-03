@@ -23,6 +23,11 @@ cryptography
 
 # third-party-apps
 django-filter
+whitenoise
+django-cors-headers
+django-cors-middleware
+django-mail-templated
+python-decouple
 
 #websocket
-channels["daphne"]
+channels[daphne]

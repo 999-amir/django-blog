@@ -5,7 +5,7 @@ from .models import CostumeUser, TrackingUserModel
 from django.contrib import messages
 from django.contrib.auth import login, logout, authenticate, update_session_auth_hash
 from .incs import check_signup_data, check_password_strength
-from .utils import send_email
+from .utils import send_email_forgetPassword, send_email_activateUser
 from rest_framework_simplejwt.tokens import RefreshToken
 from django.conf import settings
 import jwt
@@ -134,7 +134,7 @@ class SendForgetPasswordTokenView(View):
                 return render(request, 'accounts/forget-password/SEND-FORGET-PASSWORD.html', {'forms': forms})
             user = user.first()
             token = self.get_token_for_user(user)
-            send_email(user.name, token)
+            send_email_forgetPassword(user, token)
             messages.success(request, 'check your email', 'green-600')
             return redirect('home:main_page')
         return render(request, 'accounts/forget-password/SEND-FORGET-PASSWORD.html', {'forms': forms})
@@ -207,8 +207,7 @@ class SendActivateTokenView(View):
 
     def get(self, request):
         token = self.get_token_for_user(request.user)
-        # send_email(token)
-        send_email(request.user.name, token)
+        send_email_activateUser(request.user, token)
         messages.success(request, 'email send', 'green-600')
         return redirect('home:main_page')
 

@@ -13,7 +13,7 @@ from rest_framework.views import APIView
 from rest_framework_simplejwt.tokens import RefreshToken
 from django.conf import settings
 from django.shortcuts import get_object_or_404
-from accounts.utils import send_email
+from accounts.utils import send_email_forgetPassword, send_email_activateUser
 
 
 class UserAPIView(GenericAPIView):
@@ -123,8 +123,7 @@ class SendActivateTokenAPIView(GenericAPIView):
         serializer.is_valid(raise_exception=True)
         user = serializer.validated_data['user']
         token = self.get_token_for_user(user)
-        # send_email(token)
-        send_email(user.name, token)
+        send_email_activateUser(user, token)
         return Response({'detail': 'activation-token send'})
 
     def get_token_for_user(self, user):
@@ -160,8 +159,7 @@ class SendForgetPasswordTokenAPIView(GenericAPIView):
         serializer.is_valid(raise_exception=True)
         user = serializer.validated_data['user']
         token = self.get_token_for_user(user)
-        # send_email(token)
-        send_email(user.name, token)
+        send_email_forgetPassword(user, token)
         return Response({'detail': 'activation-token send'})
 
     def get_token_for_user(self, user):
