@@ -27,14 +27,7 @@
                 <a hx-get="{% url 'blog:main_page' %}" hx-target="#block_section" hx-swap="innerHTML"  class="bg-zinc-900 rounded-lg p-2 text-lime-600 border-2 border-lime-600 cursor-pointer transition ease-in-out duration-150 hover:bg-lime-700 hover:text-black">BLOG</a>
                 <a hx-get="{% url 'message:groups' %}" hx-target="#block_section" hx-swap="innerHTML" class="bg-zinc-900 rounded-lg p-2 text-lime-600 border-2 border-lime-600 cursor-pointer transition ease-in-out duration-150 hover:bg-lime-700 hover:text-black">MESSAGES</a>
                 <a hx-get="{% url 'private-data:main_page' %}" hx-target="#block_section" hx-swap="innerHTML" class="bg-zinc-900 rounded-lg p-2 text-lime-600 border-2 border-lime-600 cursor-pointer transition ease-in-out duration-150 hover:bg-lime-700 hover:text-black">PRIVATE DATA</a>
-                <div class="text-lime-600 bg-zinc-900 rounded-lg p-3 border border-lime-600 mt-3">
-                    <p>fast-access-links</p>
-                    <div class="ml-5 mt-2 grid grid-cols-1 gap-1" style="font-size: 12px">
-                        {% for fal in fast_access_data %}
-                            <a class="transition ease-in-out duration-150 hover:text-lime-700" target="_blank" href="{{ fal.link }}">- {{ fal.name }}</a>
-                        {% endfor %}
-                    </div>
-                </div>
+                
             </div>
         </aside>
         <section class="grow h-dvh mx-5 overflow-y-scroll" id="block_section">
@@ -45,8 +38,14 @@
             <div class="grid grid-cols-1 gap-2 m-2">
 
                 <canvas id="site-visit" class="bg-zinc-900 rounded-lg p-2 border border-lime-600"></canvas>
-                <canvas id="finance-btc" class="bg-zinc-900 rounded-lg p-2 border border-lime-600"></canvas>
-                <canvas id="finance-eth" class="bg-zinc-900 rounded-lg p-2 border border-lime-600"></canvas>
+                <div class="text-lime-600 bg-zinc-900 rounded-lg p-3 border border-lime-600">
+                    <p>fast-access-links</p>
+                    <div class="ml-5 mt-2 grid grid-cols-1 gap-1" style="font-size: 12px">
+                        {% for fal in fast_access_data %}
+                            <a class="transition ease-in-out duration-150 hover:text-lime-700" target="_blank" href="{{ fal.link }}">- {{ fal.name }}</a>
+                        {% endfor %}
+                    </div>
+                </div>
 
                     <div class="bg-zinc-900 rounded-lg p-2 border border-red-800 text-red-700 text-xs grid grid-cols1 gap-1">
                         {% if user.is_authenticated %}
@@ -78,50 +77,6 @@
       datasets: [{
         label: 'site visit',
         data: {{ track_users_seen.count }},
-        borderWidth: 1,
-        borderColor: '#65a30d',
-        backgroundColor: '#65a30d',
-      }]
-    },
-    options: {
-      scales: {
-        y: {
-          beginAtZero: true
-        }
-      }
-    }
-  });
-
-  const finance_btc = document.getElementById('finance-btc');
-  new Chart(finance_btc, {
-    type: 'line',
-    data: {
-      labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-      datasets: [{
-        label: 'BTC',
-        data: [12, 19, 3, 5, 2, 3],
-        borderWidth: 1,
-        borderColor: '#65a30d',
-        backgroundColor: '#65a30d',
-      }]
-    },
-    options: {
-      scales: {
-        y: {
-          beginAtZero: true
-        }
-      }
-    }
-  });
-
-  const finance_eth = document.getElementById('finance-eth');
-  new Chart(finance_eth, {
-    type: 'line',
-    data: {
-      labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-      datasets: [{
-        label: 'ETH',
-        data: [12, 19, 3, 5, 2, 3],
         borderWidth: 1,
         borderColor: '#65a30d',
         backgroundColor: '#65a30d',

@@ -210,3 +210,26 @@ it also make views much faster because there is no need for full-render. with HT
 8- 🟥disconnect-method is called when user get out of the page, it also used to remove user from online_users in database<br>
 9- 🟪receive-method used for edit or change database-models such as save new messages text and send saved-element-id into 🕹️function-handler-method<br>
 10-🕹️in function-handler-method we make visualization for all users that in the same channel by the way of create context and send it to template. at the next template will be send to current-page so we should use template with hx-swap-oob in HTMX
+
+# 🐳🐳🐳 Docker 🐳🐳🐳
+<p>🎴 used for shipping and running application togather ( for example django has port on 8000 but redis has port on 6732. without Docker we should run them separately but with docker-compose we make them work togather )</p>
+
+🐳 in this docker-compose we have:
+
+<ul>
+    <li>🐍backend: handle django-project with installation of packages, save codes, runserver</li>
+    <li>🌱worker: used celery as worker to make distributed task queue system to perform asynchronous tasks</li>
+    <li>🌱⌛schedule worker: it's similar with worker but make special_tasks in some specific times or periodic</li>
+    <li>🗜️redis: used for save workers, websocket, cache requests and send them to progress request with system or workers as fast as possible</li>
+    <li>📩smtp4dev: used for development-faze to handle and check email-requests. at the stage-faze it will be removed and use real email-configs</li>
+</ul>
+🔒 also sensitive-data such as secret_key, cryptography_key, email-configs, allowed-hosts added to docker-environment and send them to settings.py using python-decouple
+
+# 🌱celery
+🌱worker: in this project worker used to send-email in multiprocessing-method to make user without any wait for email-response<br>
+🌱⌛schedule worker: to remove unactivated users for more than 15 minutes
+
+# 🗜️redis
+🔥 used for handel workers,<br>
+🔥 make cache for load stocks-data in home-page to save loaded data for user to make faster-access without re downloading data ( cache will be updated after 12 hours ) -> checkout home->views->HomePageView->cache_page,<br>
+🔥 redis also have responsibility of handling websocket requests

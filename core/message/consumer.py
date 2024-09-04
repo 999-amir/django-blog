@@ -47,12 +47,11 @@ class MessageConsumer(WebsocketConsumer):
     def online_users(self):
         event = {
             'type': 'online_users_handler',
-            'online_users': self.group.online_users.all()
         }
         async_to_sync(self.channel_layer.group_send)(self.blog_title, event)
 
     def online_users_handler(self, event):
-        online_users = event['online_users']
+        online_users = self.group.online_users.all()
         context = {
             'online_users_number': online_users.count(),
             'online_users': online_users

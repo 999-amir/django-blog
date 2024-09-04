@@ -55,7 +55,9 @@ INSTALLED_APPS = [
     # third party app
     'django_filters',
     'corsheaders',
-    'mail_templated'
+    'mail_templated',
+    # worker-beat
+    'django_celery_beat'
 ]
 
 MIDDLEWARE = [
@@ -94,10 +96,18 @@ TEMPLATES = [
 
 # WSGI_APPLICATION = 'core.wsgi.application'
 ASGI_APPLICATION = 'core.asgi.application'
+# CHANNEL_LAYERS = {
+#     'default': {
+#         'BACKEND': 'channels.layers.InMemoryChannelLayer'
+#     }
+# }
 CHANNEL_LAYERS = {
-    'default': {
-        'BACKEND': 'channels.layers.InMemoryChannelLayer'
-    }
+    "default": {
+        "BACKEND": "channels_redis.core.RedisChannelLayer",
+        "CONFIG": {
+            "hosts": ['redis://redis:6379/3'],
+        },
+    },
 }
 
 # Database
@@ -173,7 +183,7 @@ REST_FRAMEWORK = {
 }
 
 # cryptography-key
-CRYPTOGRAPHY_KEY = b'lSUr-ch8fT33W3y9braWZsTnm6bBKWPKcU7D2Khr7Sg='  # should be changed
+CRYPTOGRAPHY_KEY = config('CRYPTOGRAPHY_KEY').encode(encoding="utf-8")  # should be changed
 
 # corsheaders
 CORS_ALLOWED_ORIGINS = config('CORS_ALLOWED_ORIGINS').split(',')
@@ -185,3 +195,17 @@ EMAIL_HOST = 'smtp4dev'
 EMAIL_HOST_USER = 'dev@gamil.com'
 EMAIL_HOST_PASSWORD = 'dev123!!'
 EMAIL_PORT = 25
+
+# worker-celery
+CELERY_BROKER_URL = 'redis://redis:6379/1'
+
+# cache
+CACHES = {
+    'default': {
+        'BACKEND': 'django_redis.cache.RedisCache',
+        'LOCATION': 'redis://redis:6379/2',
+        'OPTIONS': {
+            'CLIENT_CLASS': 'django_redis.client.DefaultClient'
+        }
+    }
+}
