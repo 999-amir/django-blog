@@ -36,11 +36,9 @@ class CreateBlogTitleView(View):
 
     def dispatch(self, request, *args, **kwargs):
         if not request.user.is_authenticated:
-            messages.error(request, 'need registration', 'amber-600')
-            return redirect('home:main_page')
+            return render(request, 'blog/BLOG-detail.html', {'notif': 'need registration'})
         elif not request.user.is_verify:
-            messages.error(request, 'please activate your account', 'amber-600')
-            return redirect('home:main_page')
+            return render(request, 'blog/BLOG-detail.html', {'notif': 'please activate your account'})
         return super().dispatch(request, *args, **kwargs)
 
     def get(self, request):
@@ -77,11 +75,9 @@ class CreateBlogContentView(View):
 
     def dispatch(self, request, *args, **kwargs):
         if not request.user.is_authenticated:
-            messages.error(request, 'need registration', 'amber-600')
-            return redirect('home:main_page')
+            return render(request, 'blog/BLOG-detail.html', {'notif': 'need registration'})
         elif not request.user.is_verify:
-            messages.error(request, 'please activate your account', 'amber-600')
-            return redirect('home:main_page')
+            return render(request, 'blog/BLOG-detail.html', {'notif': 'please activate your account'})
         self.blog = get_object_or_404(BlogModel, title=self.kwargs['blog_title'], user=request.user)
         return super().dispatch(request, *args, **kwargs)
 
@@ -103,3 +99,41 @@ class CreateBlogContentView(View):
             BlogContentModel.objects.create(blog=self.blog, text=cd['text'], file=file)
             messages.success(request, 'new content added', 'green-600')
             return render(request, 'blog/create_blog/content.html', {'blog_title': blog_title})
+
+
+class EditBlogContentView(View):
+    form_class = CreateBlogContentForm
+
+    def dispatch(self, request, *args, **kwargs):
+        if not request.user.is_authenticated:
+            return render(request, 'blog/BLOG-detail.html', {'notif': 'need registration'})
+        elif not request.user.is_verify:
+            return render(request, 'blog/BLOG-detail.html', {'notif': 'please activate your account'})
+        content = BlogContentModel.objects.filter(blog__user=request.user, id=self.kwargs['blog_content_pk'])
+        if not content.exists():
+            return render(request, 'blog/BLOG-detail.html', {'notif': 'unavailable content'})
+        self.content = content.first()
+        return super().dispatch(request, *args, **kwargs)
+
+    def get(self, request, blog_content_pk):
+        return render(request, 'blog/create_blog/edit_content.html', {'blog_content_pk': blog_content_pk})
+
+    def post(self, request, blog_content_pk):
+        forms = self.form_class(request.POST)
+        if forms.is_valid():
+            cd = forms.cleaned_data
+            try:
+                file = request.FILES['file']
+            except MultiValueDictKeyError:
+                if cd['text'] == '':
+                    messages.warning(request, 'at least one field should be filled', 'amber-600')
+                    context = {
+                        'forms': forms,
+                        'blog_content_pk': blog_content_pk
+                    }
+                    return render(request, 'blog/create_blog/edit_content.html', context)
+                file = None
+            self.content.text = cd['text']
+            self.content.file = file
+            self.content.save()
+            return redirect('blog:detail', self.content.blog.title)

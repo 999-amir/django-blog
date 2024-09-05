@@ -17,7 +17,7 @@
     </div>
     {% if systems %}
     <div class="p-5 col-span-2 gap-2 text-red-700 text-xs border border-red-900 rounded-lg mt-[3rem]">
-        <p class="text-sm text-zinc-700">! if there is unknown-devices you should change your password using <a href="{% url 'accounts:forget-password' %}" class="underline underline-offset-4 text-red-700">forget-password</a><br> ( this item can track previous 10 days of your logged in system using middleware ) !</p>
+        <p class="text-sm text-zinc-700">! if there is unknown-devices you should change your password using <a href="{% url 'accounts:forget-password' %}" class="underline underline-offset-4 text-red-700">forget-password</a> !<br> ( this item can track previous 10 days of your logged-in systems using middleware )</p>
         <div class="bg-red-950 h-[2px] w-[90%] mx-auto mb-3 mt-2"></div>
         {% for system in systems %}
         <p>🔒 {{ system }}</p>
@@ -101,7 +101,7 @@
     data: {
       labels: {{ stock.Date|safe }},
       datasets: [{
-        label: 'ETH-USD stock',
+        label: '{{ stock.name }}',
         data: {{ stock.Close }},
         borderWidth: 1,
         borderColor: '#65a30d',

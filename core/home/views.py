@@ -5,8 +5,7 @@ from accounts.models import TrackingUserModel
 from blog.models import BlogModel
 from message.models import MessageModel
 import yfinance as yf
-from django.utils.decorators import method_decorator
-from django.views.decorators.cache import cache_page
+from django.core.cache import cache
 
 
 def track_previous_days(objects):
@@ -22,8 +21,10 @@ def track_previous_days(objects):
     return data
 
 
+
+
+
 class HomeView(View):
-    @method_decorator(cache_page(60*60*12))
     def get(self, request):
         systems = []
         if request.user.is_authenticated:
@@ -38,17 +39,21 @@ class HomeView(View):
             'track_blog': track_previous_days(BlogModel.objects.all()),
             'track_messages': track_previous_days(MessageModel.objects.all()),
             'systems': systems,
-            'stock': get_finance_data('ETH-USD')
+            'stock': self.get_finance_data('ETH-USD')
         }
         return render(request, 'home/HOME.html', context)
 
-
-def get_finance_data(stock_name):
-    df = yf.Ticker(stock_name).history(period='1mo').reset_index()
-    df['Date'] = df['Date'].dt.strftime('%m/%d')
-    df['Close'] = round(df['Close'])
-    data = {
-        'Date': list(df['Date']),
-        'Close': list(df['Close'])
-    }
-    return data
+    def get_finance_data(self, stock_name):
+        if cache.get(stock_name) is None:
+            df = yf.Ticker(stock_name).history(period='1mo').reset_index()
+            df['Date'] = df['Date'].dt.strftime('%m/%d')
+            df['Close'] = round(df['Close'])
+            data = {
+                'Date': list(df['Date']),
+                'Close': list(df['Close']),
+                'name': stock_name
+            }
+            cache.set(stock_name, data, 60*60*12)
+        else:
+            data = cache.get(stock_name)
+        return data

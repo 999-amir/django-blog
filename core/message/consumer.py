@@ -4,6 +4,7 @@ from django.shortcuts import get_object_or_404
 from .models import MessageModel, MessageGroupModel
 import json
 from asgiref.sync import async_to_sync
+import re
 
 
 class MessageConsumer(WebsocketConsumer):
@@ -11,7 +12,7 @@ class MessageConsumer(WebsocketConsumer):
         self.user = self.scope['user']
         self.blog_title = self.scope['url_route']['kwargs']['blog_title']
         self.group = get_object_or_404(MessageGroupModel, blog__title=self.blog_title)
-        async_to_sync(self.channel_layer.group_add)(self.blog_title, self.channel_name)
+        async_to_sync(self.channel_layer.group_add)(re.sub('[^0-9a-zA-Z]+', '_', self.blog_title), self.channel_name)    # to replace all non-alphanumeric string with _
         if self.user not in self.group.online_users.all():
             self.group.online_users.add(self.user)
             self.online_users()
@@ -25,10 +26,10 @@ class MessageConsumer(WebsocketConsumer):
             'type': 'msg_handler',
             'msg_id': msg.id
         }
-        async_to_sync(self.channel_layer.group_send)(self.blog_title, event)
+        async_to_sync(self.channel_layer.group_send)(re.sub('[^0-9a-zA-Z]+', '_',self.blog_title), event)
 
     def disconnect(self, code):
-        async_to_sync(self.channel_layer.group_discard)(self.blog_title, self.channel_name)
+        async_to_sync(self.channel_layer.group_discard)(re.sub('[^0-9a-zA-Z]+', '_', self.blog_title), self.channel_name)
         if self.user in self.group.online_users.all():
             self.group.online_users.remove(self.user)
             self.online_users()
@@ -48,7 +49,7 @@ class MessageConsumer(WebsocketConsumer):
         event = {
             'type': 'online_users_handler',
         }
-        async_to_sync(self.channel_layer.group_send)(self.blog_title, event)
+        async_to_sync(self.channel_layer.group_send)(re.sub('[^0-9a-zA-Z]+', '_', self.blog_title), event)
 
     def online_users_handler(self, event):
         online_users = self.group.online_users.all()

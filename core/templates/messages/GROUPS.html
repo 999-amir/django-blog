@@ -1,13 +1,23 @@
 <div class="h-dvh flex justify-center items-center" id="inside_section">
-<fade-in class="opacity-0 ease-in-out" _="on load transition my opacity to 1 over 0.2 seconds">
-    {% if groups %}
-        <div class="grid grid-cols-3 text-center">
-    {% for group in groups %}
-        <a hx-get="{% url 'message:group' group.blog.title %}" hx-target="#inside_section" hx-swap="outerHTML" class="px-2 py-1 m-1 rounded-xl border-2 border-violet-700 text-violet-700 transition ease-in-out duration-150 hover:bg-violet-700 hover:text-black cursor-pointer text-xl">{{ group.blog.title }}</a>
-    {% endfor %}
-        </div>
-    {% else %}
-        <p class="text-red-700 text-center">there is no activated group<br>( you can select blog then open message to join group )</p>
-    {% endif %}
-</fade-in>
+    <fade-in class="opacity-0 ease-in-out" _="on load transition my opacity to 1 over 0.2 seconds">
+        {% if notif %}
+            <div class="h-dvh flex justify-center items-center">
+                <p class="text-red-700 text-center">{{ notif }}</p>
+            </div>
+        {% else %}
+            {% if groups %}
+                <div class="grid grid-cols-3 text-center">
+                    {% for group in groups %}
+                        <a hx-get="{% url 'message:group' group.blog.title %}" hx-target="#inside_section"
+                           hx-swap="outerHTML"
+                           class="px-2 py-1 m-1 rounded-xl border-2 border-violet-700 text-violet-700 transition ease-in-out duration-150 hover:bg-violet-700 hover:text-black cursor-pointer text-xl">{{ group.blog.title }}</a>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <p class="text-red-700 text-center">there is no activated group<br>( you can select blog then open
+                    message to join group )</p>
+            {% endif %}
+        {% endif %}
+    </fade-in>
 </div>
+{% include 'incs/notification.html' %}

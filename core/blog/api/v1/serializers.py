@@ -5,7 +5,7 @@ from blog.models import BlogModel, BlogContentModel, CategoryModel
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = CategoryModel
-        fields = ('name', 'color', 'created')
+        fields = ('id', 'name', 'color', 'created')
 
 
 class BlogSerializer(serializers.ModelSerializer):
@@ -14,7 +14,7 @@ class BlogSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = BlogModel
-        fields = ('user', 'title', 'snippet', 'category', 'created', 'updated', 'absolute_url', 'content_url')
+        fields = ('id', 'user', 'title', 'snippet', 'category', 'created', 'updated', 'absolute_url', 'content_url')
         read_only_fields = ('user', 'created', 'updated')
 
     def to_representation(self, instance):
@@ -47,9 +47,4 @@ class BlogDetailSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = BlogContentModel
-        fields = ('text', 'filename', 'is_image', 'file', 'updated', 'created')
-
-    def to_representation(self, instance):
-        rep = super().to_representation(instance)
-        return rep
-
+        fields = ('id', 'text', 'filename', 'is_image', 'file', 'updated', 'created')

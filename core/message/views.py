@@ -2,18 +2,15 @@ from django.shortcuts import render, redirect
 from django.views import View
 from .models import *
 from django.shortcuts import get_object_or_404
-from django.contrib import messages
 from .forms import MessageForm
 
 
 class MessageGroupView(View):
     def dispatch(self, request, *args, **kwargs):
         if not request.user.is_authenticated:
-            messages.error(request, 'need registration', 'amber-600')
-            return redirect('home:main_page')
+            return render(request, 'messages/GROUPS.html', {'notif': 'need registration'})
         elif not request.user.is_verify:
-            messages.error(request, 'please activate your account', 'amber-600')
-            return redirect('home:main_page')
+            return render(request, 'messages/GROUPS.html', {'notif': 'please activate your account'})
         return super().dispatch(request, *args, **kwargs)
 
     def get(self, request):
@@ -29,11 +26,9 @@ class MessageView(View):
 
     def dispatch(self, request, *args, **kwargs):
         if not request.user.is_authenticated:
-            messages.error(request, 'need registration', 'amber-600')
-            return redirect('home:main_page')
+            return render(request, 'messages/GROUPS.html', {'notif': 'need registration'})
         elif not request.user.is_verify:
-            messages.error(request, 'please activate your account', 'amber-600')
-            return redirect('home:main_page')
+            return render(request, 'messages/GROUPS.html', {'notif': 'please activate your account'})
         return super().dispatch(request, *args, **kwargs)
 
     def get(self, request, blog_title):

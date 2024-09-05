@@ -29,7 +29,7 @@ class BlogContentAPIView(GenericAPIView):
         items = BlogContentModel.objects.filter(blog=blog)
         serializer = self.serializer_class(items, many=True)
         if blog.user:
-            author = blog.user
+            author = blog.user.name
         else:
             author = 'deleted_account'
         data = {
@@ -57,3 +57,29 @@ class BlogContentAPIView(GenericAPIView):
             file = None
         BlogContentModel.objects.create(blog=blog, text=serializer_data['text'], file=file)
         return Response({'detail': 'new content added'})
+
+
+class EditBlogContentView(GenericAPIView):
+    serializer_class = BlogDetailSerializer
+    permission_classes = [IsOwnerOrReadonly]
+
+    def get(self, request, content_id):
+        item = get_object_or_404(BlogContentModel, id=content_id)
+        serializer = self.serializer_class(item)
+        return Response(serializer.data)
+
+    def put(self, request, content_id):
+        serializer = self.serializer_class(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer_data = serializer.data
+        try:
+            file = request.FILES['file']
+        except MultiValueDictKeyError:
+            if serializer_data['text'] == '':
+                return Response({'detail': 'at least one field should be filled'}, status.HTTP_400_BAD_REQUEST)
+            file = None
+        content = get_object_or_404(BlogContentModel, id=content_id)
+        content.file = file
+        content.text = serializer_data['text']
+        content.save()
+        return Response({'detail': 'content updated'})

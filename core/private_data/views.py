@@ -11,11 +11,9 @@ class PrivateDataView(View):
 
     def dispatch(self, request, *args, **kwargs):
         if not request.user.is_authenticated:
-            messages.error(request, 'need registration', 'amber-600')
-            return redirect('home:main_page')
+            return render(request, 'private_data/PRIVATE_DATA.html', {'notif': 'need registration'})
         elif not request.user.is_verify:
-            messages.error(request, 'please activate your account', 'amber-600')
-            return redirect('home:main_page')
+            return render(request, 'private_data/PRIVATE_DATA.html', {'notif': 'please activate your account'})
         return super().dispatch(request, *args, **kwargs)
 
     def get(self, request):
@@ -30,11 +28,9 @@ class PrivateDataDetailView(View):
 
     def dispatch(self, request, *args, **kwargs):
         if not request.user.is_authenticated:
-            messages.error(request, 'need registration', 'amber-600')
-            return redirect('home:main_page')
+            return render(request, 'private_data/PRIVATE_DATA.html', {'notif': 'need registration'})
         elif not request.user.is_verify:
-            messages.error(request, 'please activate your account', 'amber-600')
-            return redirect('home:main_page')
+            return render(request, 'private_data/PRIVATE_DATA.html', {'notif': 'please activate your account'})
         return super().dispatch(request, *args, **kwargs)
 
     def get(self, request, private_pk):
@@ -49,11 +45,9 @@ class CreateNewPrivateDataView(View):
 
     def dispatch(self, request, *args, **kwargs):
         if not request.user.is_authenticated:
-            messages.error(request, 'need registration', 'amber-600')
-            return redirect('home:main_page')
+            return render(request, 'private_data/PRIVATE_DATA.html', {'notif': 'need registration'})
         elif not request.user.is_verify:
-            messages.error(request, 'please activate your account', 'amber-600')
-            return redirect('home:main_page')
+            return render(request, 'private_data/PRIVATE_DATA.html', {'notif': 'please activate your account'})
         return super().dispatch(request, *args, **kwargs)
 
     def get(self, request):

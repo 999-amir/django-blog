@@ -10,5 +10,6 @@ router.register('category/', views.CategoryAPIView, basename='category')
 
 urlpatterns = router.urls
 urlpatterns += [
-    path('detail/<str:blog_title>/', views.BlogContentAPIView.as_view(), name='detail')
+    path('detail/<str:blog_title>/', views.BlogContentAPIView.as_view(), name='detail'),
+    path('detail/edit/<int:content_id>', views.EditBlogContentView.as_view(), name='edit-detail')
 ]

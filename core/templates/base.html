@@ -21,20 +21,20 @@
 </head>
 <body class="bg-black text-sm">
     <main class="flex">
-        <aside class="flex-none w-[18rem] h-dvh">
+        <aside class="flex-none w-[18rem] h-dvh hyperscript-hide-show">
             <div class="grid grid-cols-1 gap-2 m-2">
                 <a class="bg-zinc-900 rounded-lg p-2 text-lime-600 border-2 border-lime-600 cursor-pointer transition ease-in-out duration-150 hover:bg-lime-700 hover:text-black" href="{% url 'home:main_page' %}">HOME</a>
                 <a hx-get="{% url 'blog:main_page' %}" hx-target="#block_section" hx-swap="innerHTML"  class="bg-zinc-900 rounded-lg p-2 text-lime-600 border-2 border-lime-600 cursor-pointer transition ease-in-out duration-150 hover:bg-lime-700 hover:text-black">BLOG</a>
                 <a hx-get="{% url 'message:groups' %}" hx-target="#block_section" hx-swap="innerHTML" class="bg-zinc-900 rounded-lg p-2 text-lime-600 border-2 border-lime-600 cursor-pointer transition ease-in-out duration-150 hover:bg-lime-700 hover:text-black">MESSAGES</a>
                 <a hx-get="{% url 'private-data:main_page' %}" hx-target="#block_section" hx-swap="innerHTML" class="bg-zinc-900 rounded-lg p-2 text-lime-600 border-2 border-lime-600 cursor-pointer transition ease-in-out duration-150 hover:bg-lime-700 hover:text-black">PRIVATE DATA</a>
-                
+
             </div>
         </aside>
         <section class="grow h-dvh mx-5 overflow-y-scroll" id="block_section">
             {% block section %}
             {% endblock %}
         </section>
-        <aside class="flex-none w-[18rem] h-dvh">
+        <aside class="flex-none w-[18rem] h-dvh hyperscript-hide-show">
             <div class="grid grid-cols-1 gap-2 m-2">
 
                 <canvas id="site-visit" class="bg-zinc-900 rounded-lg p-2 border border-lime-600"></canvas>
@@ -54,9 +54,9 @@
                         <p>LOGIN DATE: {{ user.last_login|date:"m/d/Y" }}</p>
                         <a class="text-center px-2 py-1 border border-red-700 mt-2 rounded transition ease-in-out duration-150 hover:bg-red-700 hover:text-black" href="{% url 'accounts:change-password' %}">CHANGE-PASSWORD</a>
                         <a class="text-center px-2 py-1 border border-red-700 mt-1 rounded transition ease-in-out duration-150 hover:bg-red-700 hover:text-black" href="{% url 'accounts:logout' %}">LOGOUT</a>
-                        {% if not user.is_verify %}
-                        <a class="text-center px-2 py-1 border border-red-700 mt-1 rounded transition ease-in-out duration-150 hover:bg-red-700 hover:text-black" href="{% url 'accounts:send-activate-token' %}">activate user</a>
-                        {% endif %}
+                          {% if not user.is_verify %}
+                          <a class="text-center px-2 py-1 border border-red-700 mt-1 rounded transition ease-in-out duration-150 hover:bg-red-700 hover:text-black" href="{% url 'accounts:send-activate-token' %}">activate user</a>
+                          {% endif %}
                         {% else %}
                         <a class="text-center px-2 py-1 border border-red-700 my-1 rounded transition ease-in-out duration-150 hover:bg-red-700 hover:text-black" href="{% url 'accounts:signup' %}">SIGNUP</a>
                         <a class="text-center px-2 py-1 border border-red-700 my-1 rounded transition ease-in-out duration-150 hover:bg-red-700 hover:text-black" href="{% url 'accounts:login' %}">LOGIN</a>
@@ -66,6 +66,11 @@
             </div>
         </aside>
     </main>
+    <div id="js-toast" class="z-50 fixed bottom-4 right-2">
+        <div class="bg-black border border-zinc-600 px-5 py-3 w-[17rem] rounded-lg text-center text-zinc-600">
+            <p><span _="on click transition .hyperscript-hide-show opacity to 0 over 0.2s" class="underline underline-offset-2 cursor-pointer">hide</span> / <span _="on click transition .hyperscript-hide-show opacity to 1 over 0.2s" class="underline underline-offset-2 cursor-pointer">show</span> [sidebar]</p>
+        </div>
+    </div>
     {% include 'incs/notification.html' %}
 </body>
 <script>
