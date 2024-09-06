@@ -4,4 +4,4 @@ from home.models import FastAccessModel
 
 @admin.register(FastAccessModel)
 class FastAccessAdmin(admin.ModelAdmin):
-    list_display = ('name', 'created')
+    list_display = ("name", "created")

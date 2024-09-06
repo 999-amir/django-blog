@@ -6,24 +6,32 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('blog', '0006_remove_blogmodel_is_editable_blogmodel_user'),
+        ("blog", "0006_remove_blogmodel_is_editable_blogmodel_user"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='CategoryModel',
+            name="CategoryModel",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=50)),
-                ('created', models.DateTimeField(auto_now_add=True)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("name", models.CharField(max_length=50)),
+                ("created", models.DateTimeField(auto_now_add=True)),
             ],
             options={
-                'ordering': ('name',),
+                "ordering": ("name",),
             },
         ),
         migrations.AddField(
-            model_name='blogmodel',
-            name='category',
-            field=models.ManyToManyField(to='blog.categorymodel'),
+            model_name="blogmodel",
+            name="category",
+            field=models.ManyToManyField(to="blog.categorymodel"),
         ),
     ]

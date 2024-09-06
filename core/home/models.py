@@ -1,5 +1,4 @@
 from django.db import models
-from accounts.models import CostumeUser
 
 
 class FastAccessModel(models.Model):
@@ -9,5 +8,4 @@ class FastAccessModel(models.Model):
     created = models.DateTimeField(auto_now_add=True)
 
     class Meta:
-        ordering = ('-created',)
-
+        ordering = ("-created",)

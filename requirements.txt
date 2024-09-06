@@ -44,3 +44,7 @@ yfinance
 
 # cache
 django-redis
+
+# test
+black
+flake8

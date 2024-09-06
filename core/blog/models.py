@@ -5,11 +5,11 @@ from accounts.models import CostumeUser
 
 class CategoryModel(models.Model):
     name = models.CharField(max_length=50, unique=True)
-    color = models.CharField(max_length=20, default='lime-600')
+    color = models.CharField(max_length=20, default="lime-600")
     created = models.DateTimeField(auto_now_add=True)
 
     class Meta:
-        ordering = ('name', 'id')
+        ordering = ("name", "id")
 
     def __str__(self):
         return self.name
@@ -17,7 +17,9 @@ class CategoryModel(models.Model):
 
 class BlogModel(models.Model):
     category = models.ManyToManyField(CategoryModel)
-    user = models.ForeignKey(CostumeUser, on_delete=models.SET_NULL, null=True, blank=True)
+    user = models.ForeignKey(
+        CostumeUser, on_delete=models.SET_NULL, null=True, blank=True
+    )
     title = models.CharField(max_length=20, unique=True)
     snippet = models.CharField(max_length=250)
 
@@ -25,7 +27,7 @@ class BlogModel(models.Model):
     created = models.DateField(auto_now_add=True)
 
     class Meta:
-        ordering = ['-updated', '-id']
+        ordering = ["-updated", "-id"]
 
     def __str__(self):
         return self.title
@@ -34,7 +36,9 @@ class BlogModel(models.Model):
 class BlogContentModel(models.Model):
     blog = models.ForeignKey(BlogModel, on_delete=models.CASCADE)
     text = models.TextField(null=True, blank=True)
-    file = models.FileField(upload_to='blog-files/%y/%m/%d/', null=True, blank=True)
+    file = models.FileField(
+        upload_to="blog-files/%y/%m/%d/", null=True, blank=True
+    )
 
     updated = models.DateField(auto_now=True)
     created = models.DateField(auto_now_add=True)
@@ -45,13 +49,15 @@ class BlogContentModel(models.Model):
 
     @property
     def is_image(self):
-        if self.filename.lower().endswith(('.jpg', 'jpeg', '.png', '.gif', '.svg', '.webp')):
+        if self.filename.lower().endswith(
+            (".jpg", "jpeg", ".png", ".gif", ".svg", ".webp")
+        ):
             return True
         else:
             return False
 
     class Meta:
-        ordering = ['-created', 'id']
+        ordering = ["-created", "id"]
 
     def __str__(self):
         return self.blog.title

@@ -1,0 +1,4 @@
+[flake8]
+exclude =
+    ./core/settings.py,
+    ./message/apps.py

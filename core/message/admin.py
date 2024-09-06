@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import *
+from .models import MessageModel, MessageGroupModel
 
 
 class MessageAdmin(admin.TabularInline):
@@ -10,9 +10,9 @@ class MessageAdmin(admin.TabularInline):
 
 @admin.register(MessageGroupModel)
 class MessageGroupAdmin(admin.ModelAdmin):
-    list_display = ('blog', 'created')
-    search_fields = ('blog',)
-    ordering = ('created', 'blog')
-    readonly_fields = ('created',)
-    filter_horizontal = ('users', 'online_users')
+    list_display = ("blog", "created")
+    search_fields = ("blog",)
+    ordering = ("created", "blog")
+    readonly_fields = ("created",)
+    filter_horizontal = ("users", "online_users")
     inlines = (MessageAdmin,)

@@ -8,35 +8,56 @@ class Migration(migrations.Migration):
 
     initial = True
 
-    dependencies = [
-    ]
+    dependencies = []
 
     operations = [
         migrations.CreateModel(
-            name='BlogModel',
+            name="BlogModel",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('title', models.CharField(max_length=20, unique=True)),
-                ('snippet', models.CharField(max_length=250)),
-                ('updated', models.DateTimeField(auto_now=True)),
-                ('created', models.DateTimeField(auto_now_add=True)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("title", models.CharField(max_length=20, unique=True)),
+                ("snippet", models.CharField(max_length=250)),
+                ("updated", models.DateTimeField(auto_now=True)),
+                ("created", models.DateTimeField(auto_now_add=True)),
             ],
             options={
-                'ordering': ['-updated'],
+                "ordering": ["-updated"],
             },
         ),
         migrations.CreateModel(
-            name='BlogContentModel',
+            name="BlogContentModel",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('text', models.TextField(blank=True, null=True)),
-                ('file', models.FileField(upload_to='files/')),
-                ('updated', models.DateTimeField(auto_now=True)),
-                ('created', models.DateTimeField(auto_now_add=True)),
-                ('blog', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='blog.blogmodel')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("text", models.TextField(blank=True, null=True)),
+                ("file", models.FileField(upload_to="files/")),
+                ("updated", models.DateTimeField(auto_now=True)),
+                ("created", models.DateTimeField(auto_now_add=True)),
+                (
+                    "blog",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to="blog.blogmodel",
+                    ),
+                ),
             ],
             options={
-                'ordering': ['-updated'],
+                "ordering": ["-updated"],
             },
         ),
     ]

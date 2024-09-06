@@ -3,5 +3,8 @@ from . import consumer
 
 
 websocket_urlpatterns = [
-    path('ws/message/group/<str:blog_title>', consumer.MessageConsumer.as_asgi()),
+    path(
+        "ws/message/group/<str:blog_title>",
+        consumer.MessageConsumer.as_asgi(),
+    ),
 ]

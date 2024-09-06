@@ -1,12 +1,13 @@
 from django.core.management.base import BaseCommand
 from faker import Faker
 
-from private_data.models import PrivateDataModel
-from accounts.models import CostumeUser
+from message.models import MessageModel, MessageGroupModel
+from home.models import CostumeUser
+from blog.models import BlogModel
 
 
 class Command(BaseCommand):
-    help = "this function will generate fake private_data [ used for dev ]"
+    help = "this function will generate fake message [ used for dev ]"
 
     def __init__(self, *args, **kwargs):
         super(Command, self).__init__(*args, **kwargs)
@@ -25,16 +26,19 @@ class Command(BaseCommand):
             user.is_verify = True
             user.save()
 
-        iteration = int(
-            input("#-DJANGO] how many fake-object you want to create? -> ")
+        blog = BlogModel.objects.create(
+            user=user, title=self.faker.job(), snippet=self.faker.text()
         )
+        iteration = int(
+            input("#-DJANGO] how many fake-message you want to create? -> ")
+        )
+        group = MessageGroupModel.objects.get(blog=blog)
+
         for _ in range(iteration):  # create 10 objects for one-command
-            PrivateDataModel.objects.create(
-                user=user,
-                title=self.faker.job(),
-                username=self.faker.user_name(),
-                password=self.faker.password(),
+            MessageModel.objects.create(
+                group=group, user=user, text=self.faker.text()
             )
+
         print(f"#-DJANGO] {iteration} objects has been created in database")
         print(
             "#-DJANGO] you can checkout data with this"

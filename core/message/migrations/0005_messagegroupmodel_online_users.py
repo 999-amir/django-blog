@@ -7,14 +7,14 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('message', '0004_alter_messagemodel_created'),
+        ("message", "0004_alter_messagemodel_created"),
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='messagegroupmodel',
-            name='online_users',
+            model_name="messagegroupmodel",
+            name="online_users",
             field=models.ManyToManyField(to=settings.AUTH_USER_MODEL),
         ),
     ]

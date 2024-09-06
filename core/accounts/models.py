@@ -11,8 +11,8 @@ class CostumeUser(AbstractBaseUser):
     is_verify = models.BooleanField(default=False)
     is_admin = models.BooleanField(default=False)
     objects = CostumeUserManager()
-    USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['name']
+    USERNAME_FIELD = "email"
+    REQUIRED_FIELDS = ["name"]
 
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
@@ -32,11 +32,13 @@ class CostumeUser(AbstractBaseUser):
 
 
 class TrackingUserModel(models.Model):
-    user = models.ForeignKey(CostumeUser, on_delete=models.SET_NULL, null=True, blank=True)
+    user = models.ForeignKey(
+        CostumeUser, on_delete=models.SET_NULL, null=True, blank=True
+    )
     ip = models.GenericIPAddressField()
     system = models.CharField(max_length=250)
 
     created = models.DateField(auto_now_add=True)
 
     class Meta:
-        ordering = ('created',)
+        ordering = ("created",)

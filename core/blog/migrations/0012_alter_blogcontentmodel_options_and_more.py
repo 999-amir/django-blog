@@ -6,20 +6,20 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('blog', '0011_alter_blogcontentmodel_created_and_more'),
+        ("blog", "0011_alter_blogcontentmodel_created_and_more"),
     ]
 
     operations = [
         migrations.AlterModelOptions(
-            name='blogcontentmodel',
-            options={'ordering': ['-created', 'id']},
+            name="blogcontentmodel",
+            options={"ordering": ["-created", "id"]},
         ),
         migrations.AlterModelOptions(
-            name='blogmodel',
-            options={'ordering': ['-updated', '-id']},
+            name="blogmodel",
+            options={"ordering": ["-updated", "-id"]},
         ),
         migrations.AlterModelOptions(
-            name='categorymodel',
-            options={'ordering': ('name', 'id')},
+            name="categorymodel",
+            options={"ordering": ("name", "id")},
         ),
     ]

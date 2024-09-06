@@ -6,13 +6,13 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('blog', '0004_alter_blogcontentmodel_file'),
+        ("blog", "0004_alter_blogcontentmodel_file"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='blogmodel',
-            name='is_editable',
+            model_name="blogmodel",
+            name="is_editable",
             field=models.BooleanField(default=False),
         ),
     ]

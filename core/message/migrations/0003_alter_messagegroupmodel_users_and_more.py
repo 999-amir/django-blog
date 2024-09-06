@@ -8,19 +8,30 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('message', '0002_remove_messagemodel_blog_messagegroupmodel_and_more'),
+        (
+            "message",
+            "0002_remove_messagemodel_blog_messagegroupmodel_and_more",
+        ),
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='messagegroupmodel',
-            name='users',
-            field=models.ManyToManyField(related_name='rel_user_groups', to=settings.AUTH_USER_MODEL),
+            model_name="messagegroupmodel",
+            name="users",
+            field=models.ManyToManyField(
+                related_name="rel_user_groups", to=settings.AUTH_USER_MODEL
+            ),
         ),
         migrations.AlterField(
-            model_name='messagemodel',
-            name='group',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='rel_group_messages', to='message.messagegroupmodel'),
+            model_name="messagemodel",
+            name="group",
+            field=models.ForeignKey(
+                blank=True,
+                null=True,
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name="rel_group_messages",
+                to="message.messagegroupmodel",
+            ),
         ),
     ]

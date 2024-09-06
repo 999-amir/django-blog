@@ -5,7 +5,7 @@ from .models import BlogModel
 class CreateBlogTitleForm(forms.ModelForm):
     class Meta:
         model = BlogModel
-        fields = ('title', 'snippet', 'category')
+        fields = ("title", "snippet", "category")
 
 
 class CreateBlogContentForm(forms.Form):

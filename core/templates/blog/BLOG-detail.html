@@ -8,7 +8,7 @@
             <h1 class="text-4xl mt-[4rem] text-center">{{ blog.title }}</h1>
             <div class="bg-slate-600 h-[1px] my-5"></div>
                 <div class="h-5">
-                    <p class="float-left"><span class="text-violet-700">AUTHOR:</span>{{ blog.user.name }} | <span class="text-violet-700">CREATED:</span>{{ blog.created|date:"m/d/Y" }} | <span class="text-violet-700">LAST-UPDATED:</span>{{ blog.updated|date:"m/d/Y" }}</p>
+                    <p class="float-left"><span class="text-violet-700">AUTHOR:</span>{{ blog.user.name }} | <span class="text-violet-700">CREATED:</span>{{ blog.created|date:"m/d/Y" }}</p>
                     <p class="float-right">
                         {% for c in blog.category.all %}
                         <span class="text-{{ c.color }}-800">{{ c.name }}</span> /
