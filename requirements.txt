@@ -48,3 +48,6 @@ django-redis
 # test
 black
 flake8
+
+# stage-faze
+gunicorn

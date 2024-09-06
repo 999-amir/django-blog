@@ -20,6 +20,7 @@ class MessageConsumer(WebsocketConsumer):
         if self.user not in self.group.online_users.all():
             self.group.online_users.add(self.user)
             self.online_users()
+
         self.accept()
 
     def receive(self, text_data=None, bytes_data=None):
