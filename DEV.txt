@@ -1,4 +1,0 @@
-private_data/admin: [ add user, username, password to read-only ]
-private_data/management: [ delete management folder ]
-home/context_processors/track_users_data: [ add to cache ]
-core/settings: recreate key for secret_key and cryptography_key
