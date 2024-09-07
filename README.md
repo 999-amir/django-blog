@@ -1,5 +1,5 @@
 <h1>BLOG + CHAT + PRIVATE_DATA</h1>
-<h3>⚡ DJANGO + REST_API + HTMX + WEBSOCKET + DOCKER + CELERY + REDIS ⚡</h3>
+<h3>⚡ DJANGO + REST_API + HTMX + WEBSOCKET + DOCKER + CELERY + REDIS + GUNICORN + NGINX ⚡</h3>
 <h5>🌀  this is a django project that contain most of the django challenges 🌀 </h5>
 
 # ☢️PRIVACY (accounts)☢️
@@ -221,15 +221,93 @@ it also make views much faster because there is no need for full-render. with HT
     <li>🌱worker: used celery as worker to make distributed task queue system to perform asynchronous tasks</li>
     <li>🌱⌛schedule worker: it's similar with worker but make special_tasks in some specific times or periodic</li>
     <li>🗜️redis: used for save workers, websocket, cache requests and send them to progress request with system or workers as fast as possible</li>
-    <li>📩smtp4dev: used for development-faze to handle and check email-requests. at the stage-faze it will be removed and use real email-configs</li>
+    <li>📩smtp4dev: used for development-faze to handle and check email-requests. at the product-faze it will be removed and use real email-configs</li>
 </ul>
 🔒 also sensitive-data such as secret_key, cryptography_key, email-configs, allowed-hosts added to docker-environment and send them to settings.py using python-decouple
 
-# 🌱celery
+# 🌱Celery
 🌱worker: in this project worker used to send-email in multiprocessing-method to make user without any wait for email-response<br>
-🌱⌛schedule worker: to remove unactivated users for more than 15 minutes
+🌱⌛schedule worker: to remove unactivated users for more than 15 minutes<br>
+🔴 it's important to use celery_user as ✅non-root user✅<br>
+<ul>💀as root-user:💀️
+    <li>if there's a vulnerability in the worker or one of the tasks, an attacker could exploit it to gain full control of the system when running as root.</li>
+    <li>running different services under separate user accounts limits the impact of any potential breach</li>
+</ul>
+<p>how to create non-root user for celery-workers:</p>
 
-# 🗜️redis
+```dockerfile
+# .Dockerfile
+RUN apt-get update && apt-get install -y libcap2-bin passwd && rm -rf /var/lib/apt/lists/*
+RUN useradd --system --create-home --shell /bin/bash celery_user
+RUN chown -R celery_user:celery_user /usr/local/lib/python3.8/site-packages
+USER celery_user
+```
+
+
+# 🗜️Redis
 🔥 used for handel workers,<br>
 🔥 make cache for load stocks-data in home-page to save loaded data for user to make faster-access without re downloading data ( cache will be updated after 12 hours ) -> checkout home->views->HomePageView->cache_page,<br>
 🔥 redis also have responsibility of handling websocket requests
+
+#  🦄 Gunicorn 🦄
+🎴 Gunicorn (Green Unicorn) is a Python WSGI HTTP server that is widely used to serve Django applications in a production environment. It acts as an interface between your Django application and the web server, like Nginx or Apache, allowing your app to handle web requests efficiently
+
+# 🚀 Nginx 🚀
+Nginx ( engine-x ) is a high-performance, open-source web server and reverse proxy server. It is commonly used in modern web infrastructure for serving web content, load balancing, and handling high traffic efficiently
+
+<img src="https://blog.kakaocdn.net/dn/c9ZwjC/btrlDwyPuvc/dxX8OhYkRl18DnQiGaMn8k/img.png" alt="nginx-gunicorn-django-requests-image">
+
+# 🚀🤖
+gunicorn used for handling wsgi request, so we need to connect websocket with nginx<br>
+steps:
+1. create new container for websocket
+```dockerfile
+# docker-compose-stage.yml
+  daphne:
+    build: .
+    container_name: websocket
+    command: bash -c "daphne -b 0.0.0.0 -p 8001 core.asgi:application"
+    depends_on:
+      - backend
+      - redis
+      - db
+    volumes:
+      - ./core:/app
+    expose:
+      - "8001"
+    environment:
+      # all the environment-variables that used in backend
+```
+2. make apps to be loaded before used
+```python
+# core/asgi.py
+import django
+django.setup()
+
+from *app* import routing
+```
+3. handle Nginx to recognize websocket requests
+```default.conf
+# default.conf
+upstream websocket_backend {
+    server daphne:8001;  # Daphne (for WebSockets)
+}
+
+# default.conf -> server
+location /ws/ {
+    proxy_pass http://websocket_backend;
+    proxy_http_version 1.1;
+    proxy_set_header Upgrade $http_upgrade;
+    proxy_set_header Connection "Upgrade";
+    proxy_set_header Host $host;
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    proxy_set_header X-Forwarded-Proto $scheme;
+} 
+```
+# 🧩 faker & flake8
+🧩 faker used for create some objects in database to check admin, website ( most used for UI/UX to check frontend that work fine on not )<br>
+🐍RUN "python manage.py" to check fake-data-generator-commands<br>
+
+🧩 flake8 is a popular tool in the python ecosystem used for checking 💥PEP 8 Compliance, 💥Pyflakes, 💥McCabe Complexity<br>
+🐍RUN "flake8 ." to check all django-files except ".flake8" file<br>
