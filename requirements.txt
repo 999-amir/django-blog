@@ -3,6 +3,7 @@ asgiref
 Django
 sqlparse
 tzdata
+psycopg2-binary
 
 # generate fake-data [DEV]
 faker

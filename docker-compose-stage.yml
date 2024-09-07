@@ -1,5 +1,18 @@
 version: "3.9"
 services:
+
+  db:
+    image: postgres
+    container_name: postgresql
+    environment:
+      POSTGRES_DB: postgres_name
+      POSTGRES_USER: postgres_user
+      POSTGRES_PASSWORD: postgres_password
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
   redis:
     container_name: redis
     image: redis
@@ -27,6 +40,7 @@ services:
       - CRYPTOGRAPHY_KEY=lSUr-ch8fT33W3y9braWZsTnm6bBKWPKcU7D2Khr7Sg=
     depends_on:
       - redis
+      - db
 
   daphne:
     build: .
@@ -35,6 +49,7 @@ services:
     depends_on:
       - backend
       - redis
+      - db
     volumes:
       - ./core:/app
     expose:
@@ -53,6 +68,7 @@ services:
     depends_on:
       - redis
       - backend
+      - db
     volumes:
       - ./core:/app
     environment:
@@ -62,7 +78,7 @@ services:
       - EMAIL_HOST_USER=dev@gamil.com
       - EMAIL_HOST_PASSWORD = dev123!!
       - CRYPTOGRAPHY_KEY=lSUr-ch8fT33W3y9braWZsTnm6bBKWPKcU7D2Khr7Sg=
-  
+
   schedule_worker:
     build: .
     command: celery -A core beat -l INFO --scheduler django_celery_beat.schedulers:DatabaseScheduler
@@ -70,6 +86,7 @@ services:
       - redis
       - backend
       - worker
+      - db
     volumes:
       - ./core:/app
     environment:
@@ -96,7 +113,9 @@ services:
       - worker
       - schedule_worker
       - daphne
+      - db
 
 volumes:
+  postgres_data:
   static_volume:
   media_volume:

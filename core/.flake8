@@ -1,4 +1,5 @@
 [flake8]
 exclude =
     ./core/settings.py,
-    ./message/apps.py
+    ./message/apps.py,
+    ./core/asgi.py
