@@ -305,9 +305,10 @@ location /ws/ {
     proxy_set_header X-Forwarded-Proto $scheme;
 } 
 ```
-# 🧩 faker & flake8
+# 🧩 faker
 🧩 faker used for create some objects in database to check admin, website ( most used for UI/UX to check frontend that work fine on not )<br>
 🐍RUN "python manage.py" to check fake-data-generator-commands<br>
 
+# 🧩 flake8
 🧩 flake8 is a popular tool in the python ecosystem used for checking 💥PEP 8 Compliance, 💥Pyflakes, 💥McCabe Complexity<br>
 🐍RUN "flake8 ." to check all django-files except ".flake8" file<br>
