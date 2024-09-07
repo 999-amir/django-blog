@@ -2,3 +2,4 @@ db.sqlite3
 manage.py
 .idea
 media
+static
