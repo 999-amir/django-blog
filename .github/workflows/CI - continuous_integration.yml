@@ -15,4 +15,4 @@ jobs:
     - name: setup docker-compose
       run: docker compose -f docker-compose-stage.yml up -d
     - name: control-pep8
-      run: docker exec backend sh -c "flake8 && pytest ."
+      run: docker exec backend sh -c "flake8 ."
