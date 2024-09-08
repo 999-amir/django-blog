@@ -1,5 +1,5 @@
 <h1>BLOG + CHAT + PRIVATE_DATA</h1>
-<h3>⚡ DJANGO + REST_API + HTMX + WEBSOCKET + DOCKER + CELERY + REDIS + GUNICORN + NGINX ⚡</h3>
+<h3>⚡ DJANGO + REST_API + HTMX + WEBSOCKET + DOCKER + CELERY + REDIS + GUNICORN + NGINX + POSTGRESQL ⚡</h3>
 <h5>🌀  this is a django project that contain most of the django challenges 🌀 </h5>
 
 # ☢️PRIVACY (accounts)☢️
@@ -312,3 +312,48 @@ location /ws/ {
 # 🧩 flake8
 🧩 flake8 is a popular tool in the python ecosystem used for checking 💥PEP 8 Compliance, 💥Pyflakes, 💥McCabe Complexity<br>
 🐍RUN "flake8 ." to check all django-files except ".flake8" file<br>
+
+# 💾 postgresql 💾
+there is the reason why we need to switch to postgresql from sqlite3 (default)
+
+| feature        | SQLite3                                         | PostgreSQL                                       |
+|----------------|-------------------------------------------------|--------------------------------------------------|
+| Architecture   | Embedded, serverless                            | Client-server, multi-process                     |
+| Use Case       | Small, lightweight apps, low concurrency        | Large, complex, high-traffic applications        |
+| Scalability    | Limited, single-write access                    | Highly scalable, multi-user concurrency          |
+| Feature Set    | Basic SQL, limited data types                   | Advanced SQL, rich data types, and extensions    |
+| Concurrency    | Single-writer, multi-reader                     | High concurrency with MVCC                       |
+| Security       | Minimal (handled by the application)            | Robust authentication and access control         |
+| Backup         | Simple (copy file)                              | Advanced (logical, physical, PITR)               |
+| Data Integrity | Basic foreign keys, fewer constraints           | Strong integrity checks and advanced constraints |
+
+💾 steps of create database in docker and link it to django
+
+```dockerfile
+# docker-compose-stage.yml
+  db:
+    image: postgres
+    container_name: postgresql
+    environment:
+      POSTGRES_DB: postgres_name
+      POSTGRES_USER: postgres_user
+      POSTGRES_PASSWORD: postgres_password
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+```
+```python
+# core/settings.py
+DATABASES = {
+    "default": {
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": "postgres_name",
+        "USER": "postgres_user",
+        "PASSWORD": "postgres_password",
+        "HOST": "db",  # The service name in docker-compose
+        "PORT": "5432",
+    }
+}
+```
+🔴 all the services in docker-compose file depends on database except redis
