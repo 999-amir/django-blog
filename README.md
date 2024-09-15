@@ -372,3 +372,5 @@ enhances the security of websites by ensuring that browsers only communicate wit
 preventing browsers from interpreting files as a different MIME type than what is specified by the server. This is particularly useful in mitigating MIME type sniffing attacks, where a browser might mistakenly interpret non-executable content (like text or image files) as executable code, potentially leading to security vulnerabilities such as cross-site scripting (XSS)
 <br>`🔐X-Frame-Options:`<br>
 restricts the framing of your web pages. It helps protect against clickjacking and other attacks by ensuring your content is only displayed where you want it to be
+
+<img src="1.jpg">
