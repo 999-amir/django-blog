@@ -200,16 +200,16 @@ it also make views much faster because there is no need for full-render. with HT
 💥 checkout my repository 💥 ➡ <a href="https://github.com/999-amir/django-messager">simple example of django-message-app</a>
 
 🌀 steps of create websocket:<br>
-1- install 🐍channels-package<br>
-2- add it to ️⚙️INSTALLED_APPS( daphne )<br>
-3- change from ️⚙️"WSGI_APPLICATION"into ️⚙️"ASGI_APPLICATION"<br>
-4- add websocket to 📁core/asgi.py and link it with 📁app/routing.py<br>
-5- create 📁app/routing.py and link it with 📁app/consumer.py<br>
-6- create 📁app/consumer.py with inherit class of 🐍WebsocketConsumer with<br>[ 🟩connect, 🟪receive, 🟥disconnect ] methods ( each method should be connected with the same channel to make users connected and show changes on page to eachother )<br><br>
-7- 🟩connect-method used for evaluate 🔒user-access ( permissions ) for accept 🤝hand-shake and make group, user to initialize with others-methods and also save user in database as online_user<br>
-8- 🟥disconnect-method is called when user get out of the page, it also used to remove user from online_users in database<br>
-9- 🟪receive-method used for edit or change database-models such as save new messages text and send saved-element-id into 🕹️function-handler-method<br>
-10-🕹️in function-handler-method we make visualization for all users that in the same channel by the way of create context and send it to template. at the next template will be send to current-page so we should use template with hx-swap-oob in HTMX
+1- install 🐍`channels-package`<br>
+2- add it to ️⚙️`INSTALLED_APPS`( daphne )<br>
+3- change from ️⚙️"`WSGI_APPLICATION`"into ️⚙️"`ASGI_APPLICATION`"<br>
+4- add websocket to 📁`core/asgi.py` and link it with 📁app/routing.py<br>
+5- create 📁app/routing.py and link it with 📁`app/consumer.py`<br>
+6- create 📁`app/consumer.py` with inherit class of 🐍`WebsocketConsumer` with<br>[ 🟩`connect`, 🟪`receive`, 🟥`disconnect` ] methods ( each method should be connected with the same channel to make users connected and show changes on page to eachother )<br><br>
+7- 🟩`connect-method` used for evaluate 🔒`user-access` ( permissions ) for accept 🤝`hand-shake` and make group, user to initialize with others-methods and also save user in database as online_user<br>
+8- 🟥`disconnect-method` is called when user get out of the page, it also used to remove user from online_users in database<br>
+9- 🟪`receive-method` used for edit or change database-models such as save new messages text and send saved-element-id into 🕹️`function-handler-method`<br>
+10-🕹️in `function-handler-method` we make visualization for all users that in the same channel by the way of create context and send it to template. at the next template will be send to current-page so we should use template with hx-swap-oob in HTMX
 
 # 🐳🐳🐳 Docker 🐳🐳🐳
 <p>🎴 used for shipping and running application togather ( for example django has port on 8000 but redis has port on 6732. without Docker we should run them separately but with docker-compose we make them work togather )</p>
@@ -226,8 +226,8 @@ it also make views much faster because there is no need for full-render. with HT
 🔒 also sensitive-data such as secret_key, cryptography_key, email-configs, allowed-hosts added to docker-environment and send them to settings.py using python-decouple
 
 # 🌱Celery
-🌱worker: in this project worker used to send-email in multiprocessing-method to make user without any wait for email-response<br>
-🌱⌛schedule worker: to remove unactivated users for more than 15 minutes<br>
+`🌱worker:` in this project worker used to send-email in multiprocessing-method to make user without any wait for email-response<br>
+`🌱⌛schedule worker:` to remove unactivated users for more than 15 minutes<br>
 🔴 it's important to use celery_user as ✅non-root user✅<br>
 <ul>💀as root-user:💀️
     <li>if there's a vulnerability in the worker or one of the tasks, an attacker could exploit it to gain full control of the system when running as root.</li>
@@ -358,3 +358,17 @@ DATABASES = {
 }
 ```
 🔴 all the services in docker-compose file depends on database except redis
+
+# ⚜️security headers⚜️
+`🔐Content-Security-Policy (CSP)`<br>
+is a security feature that helps prevent various types of attacks, particularly cross-site scripting (XSS) and data injection attacks, by specifying which resources are allowed to be loaded and executed on a web page. It is a browser-based mechanism implemented by adding a special HTTP header that dictates the security policies for web content.<br>
+`🔐Permissions-Policy:`<br>
+used to control the use of browser features in web pages such as geolocation, midi, sync-xhr, microphone, camera, magnetometer, gyroscope, fullscreen, payment
+<br>`🔐Referrer-Policy:`<br>
+If you have a web page at `https://secure-site.com/account`, and you link to an external site like `http://external-site.com`, using Referrer-Policy: no-referrer ensures that no sensitive information from the URL (`/account`) is shared with the external site.
+<br>`🔐Strict-Transport-Security:`<br>
+enhances the security of websites by ensuring that browsers only communicate with the site over a secure HTTPS connection. It helps protect against certain types of attacks, particularly man-in-the-middle (MITM) attacks and SSL stripping attacks
+<br>`🔐X-Content-Type-Options:`<br>
+preventing browsers from interpreting files as a different MIME type than what is specified by the server. This is particularly useful in mitigating MIME type sniffing attacks, where a browser might mistakenly interpret non-executable content (like text or image files) as executable code, potentially leading to security vulnerabilities such as cross-site scripting (XSS)
+<br>`🔐X-Frame-Options:`<br>
+restricts the framing of your web pages. It helps protect against clickjacking and other attacks by ensuring your content is only displayed where you want it to be
