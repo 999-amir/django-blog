@@ -373,4 +373,4 @@ preventing browsers from interpreting files as a different MIME type than what i
 <br>`🔐X-Frame-Options:`<br>
 restricts the framing of your web pages. It helps protect against clickjacking and other attacks by ensuring your content is only displayed where you want it to be
 
-<img src="1.jpg">
+<img src="security-check.jpg">
