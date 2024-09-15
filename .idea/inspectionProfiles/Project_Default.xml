@@ -1,0 +1,81 @@
+<component name="InspectionProjectProfileManager">
+  <profile version="1.0">
+    <option name="myName" value="Project Default" />
+    <inspection_tool class="CssUnknownProperty" enabled="true" level="WARNING" enabled_by_default="true">
+      <option name="myCustomPropertiesEnabled" value="true" />
+      <option name="myIgnoreVendorSpecificProperties" value="false" />
+      <option name="myCustomPropertiesList">
+        <value>
+          <list size="1">
+            <item index="0" class="java.lang.String" itemvalue="color-scheme" />
+          </list>
+        </value>
+      </option>
+    </inspection_tool>
+    <inspection_tool class="HtmlUnknownAttribute" enabled="true" level="WARNING" enabled_by_default="true">
+      <option name="myValues">
+        <value>
+          <list size="11">
+            <item index="0" class="java.lang.String" itemvalue="sofia" />
+            <item index="1" class="java.lang.String" itemvalue="hx-trigger" />
+            <item index="2" class="java.lang.String" itemvalue="hx-get" />
+            <item index="3" class="java.lang.String" itemvalue="hx-target" />
+            <item index="4" class="java.lang.String" itemvalue="hx-swap" />
+            <item index="5" class="java.lang.String" itemvalue="hx-post" />
+            <item index="6" class="java.lang.String" itemvalue="hx-ext" />
+            <item index="7" class="java.lang.String" itemvalue="_" />
+            <item index="8" class="java.lang.String" itemvalue="ws-connect" />
+            <item index="9" class="java.lang.String" itemvalue="ws-send" />
+            <item index="10" class="java.lang.String" itemvalue="hx-swap-oob" />
+          </list>
+        </value>
+      </option>
+      <option name="myCustomValuesEnabled" value="true" />
+    </inspection_tool>
+    <inspection_tool class="HtmlUnknownTag" enabled="true" level="WARNING" enabled_by_default="true">
+      <option name="myValues">
+        <value>
+          <list size="10">
+            <item index="0" class="java.lang.String" itemvalue="nobr" />
+            <item index="1" class="java.lang.String" itemvalue="noembed" />
+            <item index="2" class="java.lang.String" itemvalue="comment" />
+            <item index="3" class="java.lang.String" itemvalue="noscript" />
+            <item index="4" class="java.lang.String" itemvalue="embed" />
+            <item index="5" class="java.lang.String" itemvalue="script" />
+            <item index="6" class="java.lang.String" itemvalue="div" />
+            <item index="7" class="java.lang.String" itemvalue="a" />
+            <item index="8" class="java.lang.String" itemvalue="form" />
+            <item index="9" class="java.lang.String" itemvalue="lord-icon" />
+          </list>
+        </value>
+      </option>
+      <option name="myCustomValuesEnabled" value="true" />
+    </inspection_tool>
+    <inspection_tool class="PyInterpreterInspection" enabled="false" level="WARNING" enabled_by_default="false" />
+    <inspection_tool class="PyPackageRequirementsInspection" enabled="true" level="WARNING" enabled_by_default="true">
+      <option name="ignoredPackages">
+        <value>
+          <list size="17">
+            <item index="0" class="java.lang.String" itemvalue="Django" />
+            <item index="1" class="java.lang.String" itemvalue="python-decouple" />
+            <item index="2" class="java.lang.String" itemvalue="pytest" />
+            <item index="3" class="java.lang.String" itemvalue="pytest-django" />
+            <item index="4" class="java.lang.String" itemvalue="tzdata" />
+            <item index="5" class="java.lang.String" itemvalue="black" />
+            <item index="6" class="java.lang.String" itemvalue="asgiref" />
+            <item index="7" class="java.lang.String" itemvalue="drf-yasg" />
+            <item index="8" class="java.lang.String" itemvalue="flake8" />
+            <item index="9" class="java.lang.String" itemvalue="sqlparse" />
+            <item index="10" class="java.lang.String" itemvalue="djangorestframework-simplejwt" />
+            <item index="11" class="java.lang.String" itemvalue="django-filter" />
+            <item index="12" class="java.lang.String" itemvalue="faker" />
+            <item index="13" class="java.lang.String" itemvalue="markdown" />
+            <item index="14" class="java.lang.String" itemvalue="django-mail-templated" />
+            <item index="15" class="java.lang.String" itemvalue="djoser" />
+            <item index="16" class="java.lang.String" itemvalue="djangorestframework" />
+          </list>
+        </value>
+      </option>
+    </inspection_tool>
+  </profile>
+</component>
