@@ -1,0 +1,53 @@
+﻿# base-modules
+Django
+
+# env control
+python-decouple
+
+# API
+djangorestframework
+markdown
+drf-yasg[validation]
+djangorestframework-simplejwt
+requests
+
+# websocket
+channels[daphne]
+channels-redis
+Twisted[tls,http2]
+
+# third-party-apps
+django-filter
+django-cors-headers
+django-cors-middleware
+django-mail-templated
+django-robots
+django-debug-toolbar
+
+# delivering_data, worker, beat, cache
+redis
+celery
+django-celery-beat
+django-redis
+
+# database client
+psycopg2-binary
+
+# encrypt
+cryptography
+
+# image
+pillow
+
+# finance-data
+yfinance
+
+# refactoring and tests
+black
+flake8
+Faker
+
+# deploy
+gunicorn
+whitenoise
+uvicorn[standard]

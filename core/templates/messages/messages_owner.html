@@ -1,0 +1,18 @@
+{% if msg.user == request.user %}
+    <div class="text-slate-500 my-2 p-3 bg-zinc-900 border border-lime-700 rounded-lg float-left w-[30rem]">
+        <p class="text-xs text-lime-700 mb-2">/{{ msg.user.name }}/</p>
+        <p>{{ msg.text }}</p>
+    </div>
+{% else %}
+    {% if message_group.blog.user == msg.user %}
+        <div class="text-slate-500 my-2 p-3 bg-zinc-900 border border-orange-700 rounded-lg float-right w-[30rem]">
+            <p class="text-xs text-orange-700 mb-2">/{{ msg.user.name }}/ (blog-author)</p>
+            <p>{{ msg.text }}</p>
+        </div>
+    {% else %}
+    <div class="text-slate-500 my-2 p-3 bg-zinc-900 border border-cyan-700 rounded-lg float-right w-[30rem]">
+        <p class="text-xs text-cyan-700 mb-2">/{{ msg.user.name }}/</p>
+        <p>{{ msg.text }}</p>
+    </div>
+    {% endif %}
+{% endif %}

@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block section %}
+<div class="h-dvh flex justify-center items-center">
+    <form class="w-[35%] mx-auto" method="post">{% csrf_token %}
+      <div class="relative z-0 w-full mb-5 group">
+          <input type="text" name="name" id="name" class="block py-2.5 px-0 w-full text-sm bg-transparent border-0 border-b-2 appearance-none text-lime-600 border-gray-600 focus:border-lime-600 focus:outline-none focus:ring-0 peer" placeholder=" " required autofocus/>
+          <label for="name" class="peer-focus:font-medium absolute text-sm text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-lime-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Name (in site)</label>
+      </div>
+      <div class="relative z-0 w-full mb-5 group">
+          <input type="email" name="email" id="email" class="block py-2.5 px-0 w-full text-sm bg-transparent border-0 border-b-2 appearance-none text-lime-600 border-gray-600 focus:border-lime-600 focus:outline-none focus:ring-0 peer" placeholder=" " required autofocus/>
+          <label for="email" class="peer-focus:font-medium absolute text-sm text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-lime-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Email address</label>
+      </div>
+      <div class="relative z-0 w-full mb-5 group">
+          <input type="password" name="password_1" id="password" class="block py-2.5 px-0 w-full text-sm bg-transparent border-0 border-b-2 appearance-none text-lime-600 border-gray-600 focus:border-lime-600 focus:outline-none focus:ring-0 peer" placeholder=" " required />
+          <label for="password" class="peer-focus:font-medium absolute text-sm text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-lime-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Password</label>
+      </div>
+        <div class="relative z-0 w-full mb-5 group">
+          <input type="password" name="password_2" id="confirm_password" class="block py-2.5 px-0 w-full text-sm bg-transparent border-0 border-b-2 appearance-none text-lime-600 border-gray-600 focus:border-lime-600 focus:outline-none focus:ring-0 peer" placeholder=" " required />
+          <label for="confirm_password" class="peer-focus:font-medium absolute text-sm text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-lime-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Confirm password</label>
+      </div>
+      <button type="submit" class="text-center w-[50%] mt-[1rem] bg-zinc-900 rounded-lg p-2 text-lime-600 border-2 border-lime-600 cursor-pointer transition ease-in-out duration-150 hover:bg-lime-700 hover:text-black">SUBMIT</button>
+    </form>
+</div>
+{% endblock %}

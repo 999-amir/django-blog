@@ -1,0 +1,120 @@
+{% extends 'base.html' %}
+
+{% block section %}
+<h3 class="px-5 text-lime-600 mt-5">charts:</h3>
+<div class="p-5 grid grid-cols-2 gap-2 h-[20rem]">
+    <div>
+    <canvas id="track_users"></canvas>
+    </div>
+    <div>
+    <canvas id="track_blog"></canvas>
+    </div>
+    <div>
+    <canvas id="track_messages"></canvas>
+    </div>
+    <div>
+    <canvas id="track_stock"></canvas>
+    </div>
+    {% if systems %}
+    <div class="p-5 col-span-2 gap-2 text-red-700 text-xs border border-red-900 rounded-lg mt-[3rem]">
+        <p class="text-sm text-zinc-700">! if there is unknown-devices you should change your password using <a href="{% url 'accounts:forget-password' %}" class="underline underline-offset-4 text-red-700">forget-password</a> !<br> ( this item can track previous 10 days of your logged-in systems using middleware )</p>
+        <div class="bg-red-950 h-[2px] w-[90%] mx-auto mb-3 mt-2"></div>
+        {% for system in systems %}
+        <p>🔒 {{ system }}</p>
+        {% endfor %}
+    </div>
+    {% endif %}
+</div>
+
+{% endblock %}
+
+{% block script %}
+<script>
+  const track_users = document.getElementById('track_users');
+  new Chart(track_users, {
+    type: 'line',
+    data: {
+      labels: {{ track_users.date }},
+      datasets: [{
+        label: 'number of users that opened website',
+        data: {{ track_users.count }},
+        borderWidth: 1,
+        borderColor: '#65a30d',
+        backgroundColor: '#65a30d',
+      }]
+    },
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      }
+    }
+  });
+
+  const track_blog = document.getElementById('track_blog');
+  new Chart(track_blog, {
+    type: 'line',
+    data: {
+      labels: {{ track_blog.date }},
+      datasets: [{
+        label: 'number of created-blogs',
+        data: {{ track_blog.count }},
+        borderWidth: 1,
+        borderColor: '#65a30d',
+        backgroundColor: '#65a30d',
+      }]
+    },
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      }
+    }
+  });
+
+  const track_messages = document.getElementById('track_messages');
+  new Chart(track_messages, {
+    type: 'line',
+    data: {
+      labels: {{ track_messages.date }},
+      datasets: [{
+        label: 'number of created-messages',
+        data: {{ track_messages.count }},
+        borderWidth: 1,
+        borderColor: '#65a30d',
+        backgroundColor: '#65a30d',
+      }]
+    },
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      }
+    }
+  });
+  const track_stock = document.getElementById('track_stock');
+  new Chart(track_stock, {
+    type: 'line',
+    data: {
+      labels: {{ stock.Date|safe }},
+      datasets: [{
+        label: '{{ stock.name }}',
+        data: {{ stock.Close }},
+        borderWidth: 1,
+        borderColor: '#65a30d',
+        backgroundColor: '#65a30d',
+      }]
+    },
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      }
+    }
+  });
+</script>
+{% endblock %}

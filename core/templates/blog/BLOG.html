@@ -1,0 +1,27 @@
+<div class="w-[80%] mx-auto mt-5 text-slate-600" id="inside_section">
+<fade-in class="opacity-0 ease-in-out" _="on load transition my opacity to 1 over 0.2 seconds">
+    <h3 class="px-5 mt-5">filters:</h3>
+    <form class="p-5 gird grid-cols-20 gap-2 text-xs mx-5" hx-get="{% url 'blog:main_page' %}" hx-target="#inside_section" hx-swap="outerHTML" _="on htmx:afterRequest reset() me">
+        {% for c in category %}
+            <input class="bg-black" type="checkbox" name="category" id="{{ c.name }}" value="{{ c.name }}">
+            <label class="text-blue-700" for="{{ c.name }}">{{ c.name }}</label>/
+        {% endfor %}
+        <button class="text-blue-700 text-center px-2 py-1 border border-blue-700 mt-2 rounded transition ease-in-out duration-150 hover:bg-blue-700 hover:text-black" type="submit">submit</button>
+    </form>
+    <h3 class="px-5 mt-5">blogs:</h3>
+    <div class="p-5 grid grid-cols-3 gap-3 mx-5">
+            <a hx-get="{% url 'blog:create-title' %}" hx-target="#inside_section" hx-swap="outerHTML" class="bg-zinc-900 rounded-lg border border-slate-600 p-3 cursor-pointer flex justify-center items-center">
+                <lord-icon src="https://cdn.lordicon.com/wuvorxbv.json" trigger="loop" stroke="bold" colors="primary:#b91c1c,secondary:#3730a3" style="width:50px;height:50px"></lord-icon>
+            </a>
+        {% for bd in blog_data %}
+            <a hx-get="{% url 'blog:detail' bd.title %}" hx-target="#inside_section" hx-swap="outerHTML" class="bg-zinc-900 rounded-lg border border-slate-600 p-3 cursor-pointer">
+                <h4 class="text-2xl">{{ bd.title }}</h4>
+                <p class="text-xs mt-1">created: {{ bd.created|date:"m/d/Y" }}</p>
+                {% if bd.user %}<p class="text-xs mt-1">author: {{ bd.user }}</p>{% endif %}
+                <div class="bg-slate-600 w-full h-[1px] my-2"></div>
+                <p class="text-xs mx-1">{{ bd.snippet }}</p>
+            </a>
+        {% endfor %}
+    </div>
+</fade-in>
+</div>

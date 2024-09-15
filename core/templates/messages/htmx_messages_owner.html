@@ -1,0 +1,22 @@
+<div id="htmx-messages" hx-swap-oob="beforeend">
+<fade-in class="opacity-0 ease-in-out" _="on load transition my margin-bottom to 0 over 0.1 seconds then transition my opacity to 1 over 0.2 seconds">
+{% if is_self_author %}
+    <div class="text-slate-500 my-2 p-3 bg-zinc-900 border border-lime-700 rounded-lg float-left w-[30rem]">
+        <p class="text-xs text-lime-700 mb-2">/{{ msg.user.name }}/</p>
+        <p>{{ msg.text }}</p>
+    </div>
+{% else %}
+    {% if is_msgUser_author %}
+        <div class="text-slate-500 my-2 p-3 bg-zinc-900 border border-orange-700 rounded-lg float-right w-[30rem]">
+            <p class="text-xs text-orange-700 mb-2">/{{ msg.user.name }}/ (blog-author)</p>
+            <p>{{ msg.text }}</p>
+        </div>
+    {% else %}
+    <div class="text-slate-500 my-2 p-3 bg-zinc-900 border border-cyan-700 rounded-lg float-right w-[30rem]">
+        <p class="text-xs text-cyan-700 mb-2">/{{ msg.user.name }}/</p>
+        <p>{{ msg.text }}</p>
+    </div>
+    {% endif %}
+{% endif %}
+</fade-in>
+</div>

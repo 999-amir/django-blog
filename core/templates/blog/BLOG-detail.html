@@ -1,0 +1,45 @@
+<div class="w-[80%] mx-auto text-slate-500" id="inside_section">
+    <fade-in class="opacity-0 ease-in-out" _="on load transition my opacity to 1 over 0.2 seconds">
+        {% if notif %}
+            <div class="h-dvh flex justify-center items-center">
+                <p class="text-red-700 text-center">{{ notif }}</p>
+            </div>
+        {% else %}
+            <h1 class="text-4xl mt-[4rem] text-center">{{ blog.title }}</h1>
+            <div class="bg-slate-600 h-[1px] my-5"></div>
+                <div class="h-5">
+                    <p class="float-left"><span class="text-violet-700">AUTHOR:</span>{{ blog.user.name }} | <span class="text-violet-700">CREATED:</span>{{ blog.created|date:"m/d/Y" }}</p>
+                    <p class="float-right">
+                        {% for c in blog.category.all %}
+                        <span class="text-{{ c.color }}-800">{{ c.name }}</span> /
+                        {% endfor %}
+                    </p>
+                </div>
+            <div class="bg-slate-600 h-[1px] my-5"></div>
+
+            {% for d in data %}
+                <div class="w-full flex justify-between my-2">
+                {% if d.text %}
+                    <p class="text-xs mb-5">{{ d.text }}</p>
+                {% endif %}
+                {% if d.is_image %}
+                    <img class="mx-auto outline outline-2 outline-offset-8 rounded-lg w-[23rem] my-[3rem]" src="{{ d.file.url }}" alt="{{ d.filename }}">
+                {% elif not d.text %}
+                    <a class="text-blue-800 mb-5" href="{{ d.file.url }}" download>🔗download file: <span class="underline underline-offset-4">{{ d.filename }}</span></a>
+                {% endif %}
+                {% if user == blog.user %}
+                    <a hx-get="{% url 'blog:edit-content' d.id %}" hx-target="#inside_section" hx-swap="outerHTML" class="cursor-pointer ml-3">
+                        <lord-icon src="https://cdn.lordicon.com/wuvorxbv.json" stroke="bold" colors="primary:#b91c1c,secondary:#3730a3" style="width:35px;height:35px"></lord-icon>
+                    </a>
+                {% endif %}
+                </div>
+            {% endfor %}
+            <div class="w-full flex justify-end">
+                <a hx-get="{% url 'message:group' blog.title %}" hx-target="#inside_section" hx-swap="outerHTML"
+                   class="px-4 py-3 border-2 border-lime-600 text-lime-600 rounded-lg m-5 transition ease-in-out duration-150 hover:bg-lime-600 hover:text-black cursor-pointer">
+                    open chat-room
+                </a>
+            </div>
+        {% endif %}
+    </fade-in>
+</div>

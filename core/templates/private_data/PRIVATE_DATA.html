@@ -1,0 +1,29 @@
+<div class="w-[80%] mx-auto text-slate-600" id="inside_section">
+    <fade-in class="opacity-0 ease-in-out" _="on load transition my opacity to 1 over 0.2 seconds">
+        {% if notif %}
+            <div class="h-dvh flex justify-center items-center">
+                <p class="text-red-700 text-center">{{ notif }}</p>
+            </div>
+        {% else %}
+            <h3 class="px-5 mt-5">private key:</h3>
+            <div class="p-5 grid grid-cols-3 gap-3 mx-5">
+                <a hx-get="{% url 'private-data:create-new' %}" hx-target="#inside_section" hx-swap="outerHTML"
+                   class="bg-zinc-900 rounded-lg border border-slate-600 p-3 cursor-pointer flex justify-center items-center">
+                    <lord-icon src="https://cdn.lordicon.com/wuvorxbv.json" trigger="loop" stroke="bold"
+                               colors="primary:#b91c1c,secondary:#3730a3" style="width:50px;height:50px"></lord-icon>
+                </a>
+                {% for pd in private_data %}
+                    <a class="bg-zinc-900 rounded-lg border border-slate-600 p-3 cursor-pointer uppercase"
+                       hx-get="{% url 'private-data:detail' pd.pk %}" hx-target="#inside_section" hx-swap="beforebegin">
+                        <h4 class="text-2xl">{{ pd.title }}</h4>
+                        <div class="bg-slate-600 w-full h-[1px] my-2"></div>
+                        <p class="text-xs mx-1">
+                            UPDATED: {{ pd.updated|date:"m/d/Y" }}<br>
+                            CREATED: {{ pd.created|date:"m/d/Y" }}<br>
+                        </p>
+                    </a>
+                {% endfor %}
+            </div>
+        {% endif %}
+    </fade-in>
+</div>

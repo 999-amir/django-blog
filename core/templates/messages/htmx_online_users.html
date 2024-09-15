@@ -1,0 +1,9 @@
+<div id="htmx-online-users" hx-swap-oob="innerHTML">
+<fade-in class="opacity-0 ease-in-out" _="on load transition my margin-bottom to 0 over 0.1 seconds then transition my opacity to 1 over 0.2 seconds">
+    <div class="bg-red-800 text-black px-3 py-2 rounded-lg w-[13rem] mb-1">online users: {{ online_users_number }}</div>
+    <div class="bg-black text-red-900 p-3 rounded-lg border-2 border-red-700 h-[15rem] overflow-y-scroll">
+        {% for user in online_users %}
+        <p>{{ user.name }}</p>
+        {% endfor %}
+</fade-in>
+</div>

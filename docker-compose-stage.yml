@@ -1,0 +1,108 @@
+version: "3.9"
+services:
+
+  db:
+    image: postgres
+    container_name: postgresql
+    env_file:
+      - envs/stage/db/.env
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+  redis:
+    container_name: redis
+    image: redis
+    command: redis-server --save 60 1 --loglevel warning
+    restart: always
+    ports:
+      - "6379:6379"
+
+  backend:
+    build:
+      context: .
+      dockerfile: dockerfiles/stage/django/Dockerfile
+    container_name: backend
+    restart: always
+    expose:
+      - "8000"
+    command: sh -c "python manage.py makemigrations && python manage.py migrate && python manage.py collectstatic --noinput && gunicorn core.wsgi --bind 0.0.0.0:8000"
+    env_file:
+      - envs/stage/backend/.env
+    volumes:
+      - ./core:/app
+      - static_volume:/app/static
+      - media_volume:/app/media
+    depends_on:
+      - redis
+      - db
+
+  daphne:
+    build:
+      context: .
+      dockerfile: dockerfiles/stage/django/Dockerfile
+    container_name: websocket
+    expose:
+      - "8001"
+    command: bash -c "daphne -b 0.0.0.0 -p 8001 core.asgi:application"
+    env_file:
+      - envs/stage/backend/.env
+    volumes:
+      - ./core:/app
+    depends_on:
+      - backend
+      - redis
+      - db
+
+  worker:
+    build:
+      context: .
+      dockerfile: dockerfiles/stage/django/Dockerfile
+    container_name: worker
+    command: celery -A core worker --loglevel=info
+    env_file:
+      - envs/stage/backend/.env
+    volumes:
+      - ./core:/app
+    depends_on:
+      - redis
+      - backend
+      - db
+
+  schedule_worker:
+    build:
+      context: .
+      dockerfile: dockerfiles/stage/django/Dockerfile
+    container_name: beat
+    command: celery -A core beat -l INFO --scheduler django_celery_beat.schedulers:DatabaseScheduler
+    env_file:
+      - envs/stage/backend/.env
+    volumes:
+      - ./core:/app
+    depends_on:
+      - redis
+      - backend
+      - db
+
+  nginx:
+    build:
+      context: .
+      dockerfile: dockerfiles/stage/nginx/Dockerfile
+    container_name: nginx
+    restart: always
+    ports:
+      - "80:80"
+    volumes:
+      - static_volume:/home/app/static
+      - media_volume:/home/app/media
+    depends_on:
+      - redis
+      - backend
+      - db
+      - daphne
+
+volumes:
+  postgres_data:
+  static_volume:
+  media_volume:
